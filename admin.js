@@ -1,6 +1,6 @@
 const ADMIN_SUPABASE_URL = "https://sxangxdumgoarftpidex.supabase.co";
 
-const ADMIN_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN4YW5neGR1bWdvYXJmdHBpZGV4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyMTAyNjQsImV4cCI6MjA5NTc4NjI2NH0.YIrylgNL3n8vzROjxLLyFTT_k1-TowcLQ0ALjNZzLYc";
+const ADMIN_SUPABASE_ANON_KEY = "TU_ANON_KEY_AQUI";
 
 const adminSupabase = supabase.createClient(
     ADMIN_SUPABASE_URL,
@@ -18,36 +18,25 @@ const closeReasonModal = document.getElementById("closeReasonModal");
 
 async function loadAdminPanel(){
 
-    const { data: userData, error: userError } = await adminSupabase.auth.getUser();
+    const { data: sessionData } = await adminSupabase.auth.getSession();
 
-    if(userError || !userData.user){
+    if(!sessionData.session){
         window.location.href = "login.html";
         return;
     }
 
-    const userEmail = userData.user.email;
+    const userEmail = sessionData.session.user.email.toLowerCase();
 
     const { data: adminData, error: adminError } = await adminSupabase
-    .from("admins")
-    .select("*")
-    .ilike("email", userEmail)
-    .maybeSingle();
+        .from("admins")
+        .select("*")
+        .ilike("email", userEmail)
+        .maybeSingle();
 
-const { data: adminData, error: adminError } = await adminSupabase
-    .from("admins")
-    .select("*")
-    .ilike("email", userEmail)
-    .maybeSingle();
-
-if(adminError || !adminData){
-    window.location.href = "no-access.html";
-    return;
-}
-
-if(adminError || !adminData){
-    window.location.href = "no-access.html";
-    return;
-}
+    if(adminError || !adminData){
+        window.location.href = "no-access.html";
+        return;
+    }
 
     const { data: applicants, error: applicantsError } = await adminSupabase
         .from("Applicants")
@@ -104,9 +93,7 @@ function renderApplicants(applicants){
             </td>
         `;
 
-        const button = row.querySelector(".reason-button");
-
-        button.addEventListener("click", function(){
+        row.querySelector(".reason-button").addEventListener("click", function(){
             openReasonModal(applicant.reason || "Sin motivo registrado.");
         });
 
