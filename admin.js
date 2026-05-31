@@ -28,15 +28,21 @@ async function loadAdminPanel(){
     const userEmail = userData.user.email;
 
     const { data: adminData, error: adminError } = await adminSupabase
-        .from("admins")
-        .select("*")
-        .ilike("email", userEmail)
-        .single();
+    .from("admins")
+    .select("*")
+    .ilike("email", userEmail)
+    .maybeSingle();
 
-    if(adminError || !adminData){
-        window.location.href = "no_access.html";
-        return;
-    }
+alert(
+    "Email logueado: " + userEmail +
+    "\nAdmin encontrado: " + JSON.stringify(adminData) +
+    "\nError: " + JSON.stringify(adminError)
+);
+
+if(adminError || !adminData){
+    window.location.href = "no-access.html";
+    return;
+}
 
     const { data: applicants, error: applicantsError } = await adminSupabase
         .from("Applicants")
