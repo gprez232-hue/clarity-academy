@@ -33,11 +33,16 @@ async function loadAdminPanel(){
     .ilike("email", userEmail)
     .maybeSingle();
 
-alert(
-    "Email logueado: " + userEmail +
-    "\nAdmin encontrado: " + JSON.stringify(adminData) +
-    "\nError: " + JSON.stringify(adminError)
-);
+const { data: adminData, error: adminError } = await adminSupabase
+    .from("admins")
+    .select("*")
+    .ilike("email", userEmail)
+    .maybeSingle();
+
+if(adminError || !adminData){
+    window.location.href = "no-access.html";
+    return;
+}
 
 if(adminError || !adminData){
     window.location.href = "no-access.html";
