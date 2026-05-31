@@ -311,6 +311,36 @@ body{
         grid-template-columns:repeat(2, 1fr);
     }
 }
+    .extra-tables{
+    margin-top:25px;
+}
+
+.extra-title{
+    text-align:center;
+    color:white;
+    font-size:13px;
+    font-weight:900;
+    margin-bottom:10px;
+    letter-spacing:1px;
+}
+
+.extra-btn{
+    width:100%;
+    padding:12px;
+    margin-bottom:8px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    background:#1565c0;
+    color:white;
+    font-size:13px;
+    font-weight:900;
+}
+
+.extra-btn:hover{
+    background:#38bdf8;
+    color:#082B63;
+}
 </style>
 </head>
 
@@ -347,6 +377,26 @@ body{
             <div id="columns" class="columns"></div>
 
             <div id="legend" class="legend"></div>
+            <div class="extra-tables">
+
+    <h3 class="extra-title">OTRAS TABLAS</h3>
+
+    <button class="extra-btn"
+        onclick="showExtraTable('Defensa')">
+        DEFENSA
+    </button>
+
+    <button class="extra-btn"
+        onclick="showExtraTable('Cbet Flop')">
+        CBET FLOP
+    </button>
+
+    <button class="extra-btn"
+        onclick="showExtraTable('Cbet TYR')">
+        CBET T Y R
+    </button>
+
+</div>
 
         </aside>
 
@@ -647,6 +697,34 @@ function showImage(spot, stack){
     <h3>${spot} | ${stack}</h3>
     <img src="${imgPath}" onerror="this.style.display='none'; this.parentElement.innerHTML += '<div class=&quot;empty-state&quot;>Imagen no encontrada. Revisa la carpeta: ${imgPath}</div>';">
   `;
+}
+    function showExtraTable(type){
+
+    let imgPath = "";
+
+    if(type === "Defensa"){
+        imgPath = "images/Defensa/general.png";
+    }
+
+    if(type === "Cbet Flop"){
+        imgPath = "images/Cbet_Flop/general.png";
+    }
+
+    if(type === "Cbet TYR"){
+        imgPath = "images/Cbet_TYR/general.png";
+    }
+
+    document.getElementById("title").innerText = type;
+
+    document.getElementById("stacks").innerHTML = "";
+
+    document.getElementById("legend").innerHTML = "";
+
+    document.getElementById("table").innerHTML = `
+        <h3>${type}</h3>
+        <img src="${imgPath}"
+        onerror="this.style.display='none'; this.parentElement.innerHTML += '<div class=&quot;empty-state&quot;>Imagen no encontrada</div>';">
+    `;
 }
 
 function findStacks(spot){
