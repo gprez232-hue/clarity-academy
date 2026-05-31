@@ -435,7 +435,35 @@ body{
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="private.js"></script>
+
+<script>
+const PREFLOP_SUPABASE_URL = "https://sxangxdumgoarftpidex.supabase.co";
+
+const PREFLOP_SUPABASE_ANON_KEY = "TU_ANON_KEY_AQUI";
+
+const preflopSupabase = supabase.createClient(
+    PREFLOP_SUPABASE_URL,
+    PREFLOP_SUPABASE_ANON_KEY
+);
+
+async function checkPreflopAccess(){
+    const loadingModal = document.getElementById("loadingModal");
+
+    const { data, error } = await preflopSupabase.auth.getSession();
+
+    if(error || !data.session){
+        window.location.href = "login.html";
+        return;
+    }
+
+    if(loadingModal){
+        loadingModal.style.display = "none";
+    }
+}
+
+checkPreflopAccess();
+</script>
+
 <script src="auth.js"></script>
 
 <script>
