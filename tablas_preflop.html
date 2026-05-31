@@ -346,6 +346,14 @@ body{
     background:#38bdf8;
     color:#082B63;
 }
+
+    .preflop-sidebar.hu-mode .legend{
+    margin-top:8px;
+}
+
+.preflop-sidebar.hu-mode .columns{
+    margin-bottom:4px;
+}
 </style>
 </head>
 
@@ -629,18 +637,16 @@ function loadLegend(spot){
 
 function setMode(mode, btn){
   currentMode = mode;
-  document.querySelectorAll(".mode-btn").forEach(b => b.classList.remove("active"));
-  btn.classList.add("active");
-  loadColumns();
-  document.getElementById("stacks").innerHTML = "";
-  document.getElementById("legend").innerHTML = "";
-  document.getElementById("table").innerHTML = `
-    <div class="empty-state">
-      Selecciona un spot desde el panel izquierdo para cargar la tabla preflop.
-    </div>
-  `;
-  document.getElementById("title").innerText = "Selecciona un spot";
-}
+  const sidebar = document.querySelector(".preflop-sidebar");
+
+  if(sidebar){
+    if(mode === "HU"){
+      sidebar.classList.add("hu-mode");
+    }else{
+      sidebar.classList.remove("hu-mode");
+    }
+  }
+    
 
 function loadColumns(){
   let container = document.getElementById("columns");
