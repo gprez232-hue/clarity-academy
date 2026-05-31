@@ -107,20 +107,22 @@ if(registerForm){
 
         const { data, error } = await supabaseClient.auth.signUp({
 
-            email: email,
-            password: password,
+    email: email,
+    password: password,
 
-            options: {
-                data: {
-                    name: name,
-                    discord: discord,
-                    country: country,
-                    experience: experience,
-                    reason: reason
-                }
-            }
+    options: {
+        emailRedirectTo: "https://www.clarityspinandgo.com/verified.html",
 
-        });
+        data: {
+            name: name,
+            discord: discord,
+            country: country,
+            experience: experience,
+            reason: reason
+        }
+    }
+
+});
 
         if(error){
 
