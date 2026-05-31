@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Examen de Ingreso | Clarity Spin & Go Academy</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f4f9ff;
+    color:#1f2937;
+}
+
+.navbar{
+    height:50px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 7%;
+    background:#082B63;
+    border-bottom:2px solid #5bc0ff;
+    position:relative;
+}
+
+.brand{
+    text-decoration:none;
+}
+
+.brand-name{
+    font-size:20px;
+    font-weight:900;
+    color:#ffffff;
+    letter-spacing:1px;
+}
+
+.nav-menu{
+    display:flex;
+    gap:60px;
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+.nav-menu a{
+    text-decoration:none;
+    color:#eaf6ff;
+    font-size:13px;
+    font-weight:600;
+}
+
+.nav-menu a:hover{
+    color:#5bc0ff;
+}
+
+.auth{
+    display:flex;
+    gap:15px;
+}
+
+.login-link{
+    text-decoration:none;
+    color:#ffffff;
+    font-size:13px;
+    font-weight:600;
+}
+
+.register-link{
+    text-decoration:none;
+    color:#5bc0ff;
+    font-size:13px;
+    font-weight:700;
+}
+
+.page{
+    min-height:calc(100vh - 50px);
+    background:
+        radial-gradient(circle at top right, rgba(91,192,255,0.28), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, #eef8ff 100%);
+    padding:55px 7% 45px;
+}
+
+.container{
+    max-width:1100px;
+    margin:0 auto;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:45px;
+}
+
+.badge{
+    display:inline-block;
+    color:#1565c0;
+    background:#e5f6ff;
+    border:1px solid #bdeaff;
+    padding:7px 14px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:18px;
+}
+
+.header h1{
+    font-size:48px;
+    color:#1565c0;
+    margin-bottom:12px;
+}
+
+.header p{
+    font-size:18px;
+    color:#4b5563;
+    max-width:760px;
+    margin:0 auto;
+    line-height:1.6;
+}
+
+.exam-grid{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:30px;
+    align-items:start;
+}
+
+.main-card,
+.side-card{
+    background:white;
+    border:1px solid #d8eefc;
+    border-radius:22px;
+    padding:34px;
+    box-shadow:0 18px 40px rgba(8,43,99,0.10);
+}
+
+.main-card h2,
+.side-card h2{
+    color:#082B63;
+    font-size:26px;
+    margin-bottom:16px;
+}
+
+.main-card p,
+.side-card p{
+    color:#4b5563;
+    font-size:15px;
+    line-height:1.7;
+    margin-bottom:18px;
+}
+
+.exam-info{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:16px;
+    margin:28px 0;
+}
+
+.info-box{
+    background:#f3fbff;
+    border:1px solid #d8eefc;
+    border-radius:16px;
+    padding:18px;
+}
+
+.info-box strong{
+    display:block;
+    color:#1565c0;
+    font-size:16px;
+    margin-bottom:6px;
+}
+
+.info-box span{
+    color:#4b5563;
+    font-size:14px;
+    line-height:1.5;
+}
+
+.discord-button{
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    margin-top:8px;
+    padding:14px 26px;
+    background:#5865F2;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:900;
+    transition:0.2s;
+}
+
+.discord-button:hover{
+    background:#4752c4;
+    transform:translateY(-1px);
+}
+
+.discord-icon{
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    background:white;
+    color:#5865F2;
+    display:grid;
+    place-items:center;
+    font-size:17px;
+    font-weight:900;
+}
+
+.steps{
+    display:grid;
+    gap:15px;
+    margin-top:18px;
+}
+
+.step{
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+    background:#f3fbff;
+    border:1px solid #d8eefc;
+    border-radius:14px;
+    padding:16px;
+}
+
+.step-number{
+    width:30px;
+    height:30px;
+    min-width:30px;
+    background:#1565c0;
+    color:white;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    font-weight:900;
+    font-size:13px;
+}
+
+.step-content strong{
+    display:block;
+    color:#082B63;
+    margin-bottom:4px;
+}
+
+.step-content span{
+    color:#4b5563;
+    font-size:14px;
+    line-height:1.5;
+}
+
+.warning-card{
+    margin-top:35px;
+    background:#082B63;
+    color:white;
+    border-radius:22px;
+    padding:32px;
+    text-align:center;
+    box-shadow:0 18px 40px rgba(8,43,99,0.14);
+}
+
+.warning-card h2{
+    font-size:26px;
+    margin-bottom:10px;
+}
+
+.warning-card p{
+    color:#dbeafe;
+    max-width:760px;
+    margin:0 auto;
+    line-height:1.6;
+}
+
+.footer{
+    background:#082B63;
+    color:white;
+    padding:16px 7%;
+}
+
+.footer-content{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:30px;
+}
+
+.footer-brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.footer-logo{
+    font-size:18px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.footer-subtitle-footer{
+    font-size:13px;
+    color:#5bc0ff;
+}
+
+.footer-copy{
+    font-size:12px;
+    color:#c7d9f5;
+}
+
+@media(max-width:900px){
+    .navbar{
+        height:auto;
+        padding:15px 5%;
+        flex-wrap:wrap;
+        gap:10px;
+    }
+
+    .nav-menu{
+        position:static;
+        transform:none;
+        width:100%;
+        justify-content:center;
+        order:3;
+        gap:25px;
+        flex-wrap:wrap;
+    }
+
+    .page{
+        padding:40px 5%;
+    }
+
+    .header h1{
+        font-size:36px;
+    }
+
+    .exam-grid{
+        grid-template-columns:1fr;
+    }
+
+    .exam-info{
+        grid-template-columns:1fr;
+    }
+
+    .footer-content{
+        flex-direction:column;
+        text-align:center;
+        gap:10px;
+    }
+}
+
+.loading-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(8,43,99,0.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+}
+
+.loading-card{
+    background:white;
+    padding:32px 42px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 20px 45px rgba(8,43,99,0.20);
+}
+
+.spinner{
+    width:42px;
+    height:42px;
+    border:4px solid #d8eefc;
+    border-top:4px solid #1565c0;
+    border-radius:50%;
+    animation:spin 0.8s linear infinite;
+    margin:0 auto 16px;
+}
+
+.loading-card p{
+    color:#082B63;
+    font-size:15px;
+    font-weight:800;
+    margin:0;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.footer-admin{
+    margin-top:14px;
+    text-align:center;
+}
+
+.footer-admin a{
+    color:#7c8ca5;
+    text-decoration:none;
+    font-size:12px;
+    font-weight:600;
+    transition:0.2s;
+}
+
+.footer-admin a:hover{
+    color:#1565c0;
+}
+</style>
+</head>
+
+<body data-private="true">
+
+<header class="navbar">
+    <a href="index.html" class="brand">
+        <span class="brand-name">CLARITY</span>
+    </a>
+
+    <nav class="nav-menu">
+        <a href="bancajes.html">Bancajes</a>
+        <a href="curso_ingreso.html">Curso de ingreso</a>
+        <a href="examen.html">Examen de ingreso</a>
+    </nav>
+
+    <div class="auth" id="authArea">
+    <a href="login.html" class="login-link">Login</a>
+    <a href="register.html" class="register-link">Register</a>
+</div>
+</header>
+
+<main class="page">
+    <div class="container">
+
+        <section class="header">
+            <span class="badge">Examen de ingreso</span>
+            <h1>Evaluación en vivo por Discord</h1>
+            <p>
+                Para ingresar a Clarity, deberás realizar un examen en vivo con un coach de la academia.
+                El objetivo es comprobar que realmente estudiaste el curso y puedes aplicar los conceptos correctamente.
+            </p>
+        </section>
+
+        <section class="exam-grid">
+
+            <div class="main-card">
+                <h2>¿Cómo funciona el examen?</h2>
+                <p>
+                    El examen se realiza en una llamada privada por Discord. Durante la evaluación,
+                    hablaremos sobre los conceptos del curso de ingreso y revisaremos si entiendes
+                    la estrategia base de Clarity.
+                </p>
+
+                <div class="exam-info">
+                    <div class="info-box">
+                        <strong>Duración</strong>
+                        <span>15 a 20 minutos aproximadamente.</span>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>Modalidad</strong>
+                        <span>Examen oral en vivo por Discord.</span>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>Objetivo</strong>
+                        <span>Validar comprensión real del curso.</span>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>Resultado</strong>
+                        <span>El coach decidirá si estás listo para avanzar.</span>
+                    </div>
+                </div>
+
+                <p>
+                    Para programar tu examen, contáctanos por Discord y coordinaremos una fecha disponible.
+                </p>
+
+                <a href="https://discord.gg/BAEyFeU3ep" target="_blank" class="discord-button">
+                    <span class="discord-icon">☁</span>
+                    Contactar por Discord
+                </a>
+            </div>
+
+            <div class="side-card">
+                <h2>Antes de solicitarlo</h2>
+                <p>
+                    Asegúrate de haber completado el curso de ingreso y de poder explicar los conceptos
+                    principales con tus propias palabras.
+                </p>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <strong>Completa el curso</strong>
+                            <span>Estudia los 10 módulos de la formación base.</span>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <strong>Repasa la estrategia</strong>
+                            <span>Especialmente preflop, 3Way y HU.</span>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <strong>Contacta por Discord</strong>
+                            <span>Escríbenos para coordinar día y horario.</span>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <strong>Realiza el examen</strong>
+                            <span>El coach evaluará tu comprensión y actitud.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="warning-card">
+            <h2>Queremos jugadores comprometidos</h2>
+            <p>
+                El examen no busca complicarte. Buscamos confirmar que tienes interés real,
+                que estudiaste el material y que estás preparado para recibir coaching dentro de Clarity.
+            </p>
+        </section>
+
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-brand">
+            <span class="footer-logo">CLARITY</span>
+            <span class="footer-subtitle-footer">Spin & Go Academy</span>
+        </div>
+
+        <div class="footer-copy">
+            © 2026 Clarity Spin & Go Academy. Todos los derechos reservados.
+        </div>
+        <div class="footer-admin">
+    <a href="admin.html">Acceso administrativo</a>
+</div>
+    </div>
+</footer>
+<div id="loadingModal" class="loading-overlay">
+    <div class="loading-card">
+        <div class="spinner"></div>
+        <p>Cargando...</p>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="private.js"></script>
+<script src="auth.js"></script>
+
+</body>
+</html>
+
+</body>
+</html>
