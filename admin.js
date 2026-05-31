@@ -1,6 +1,6 @@
 const ADMIN_SUPABASE_URL = "https://sxangxdumgoarftpidex.supabase.co";
 
-const ADMIN_SUPABASE_ANON_KEY = "TU_ANON_KEY_AQUI";
+const ADMIN_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN4YW5neGR1bWdvYXJmdHBpZGV4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyMTAyNjQsImV4cCI6MjA5NTc4NjI2NH0.YIrylgNL3n8vzROjxLLyFTT_k1-TowcLQ0ALjNZzLYc";
 
 const adminSupabase = supabase.createClient(
     ADMIN_SUPABASE_URL,
@@ -30,7 +30,7 @@ async function loadAdminPanel(){
     const { data: adminData, error: adminError } = await adminSupabase
         .from("admins")
         .select("*")
-        .eq("email", userEmail)
+        .ilike("email", userEmail)
         .single();
 
     if(adminError || !adminData){
