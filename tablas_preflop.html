@@ -103,8 +103,6 @@ body{
     border-radius:22px;
     padding:22px;
     box-shadow:0 18px 40px rgba(8,43,99,0.10);
-    height:calc(100vh - 120px);
-    overflow-y:auto;
 }
 
 .sidebar h2{
@@ -144,7 +142,9 @@ body{
 
 .columns{
     display:grid;
+    grid-template-columns:repeat(4,1fr);
     gap:16px;
+    margin-bottom:20px;
 }
 
 .column{
@@ -208,6 +208,7 @@ body{
 }
 
 .main{
+     width:100%;
     background:white;
     border:1px solid #d8eefc;
     border-radius:22px;
