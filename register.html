@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register | Clarity Spin & Go Academy</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at top right, rgba(91,192,255,0.28), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, #eef8ff 100%);
+    color:#1f2937;
+    min-height:100vh;
+}
+
+.navbar{
+    height:50px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 7%;
+    background:#082B63;
+    border-bottom:2px solid #5bc0ff;
+}
+
+.brand{text-decoration:none}
+
+.brand-name{
+    font-size:20px;
+    font-weight:900;
+    color:#ffffff;
+    letter-spacing:1px;
+}
+
+.nav-link{
+    color:#5bc0ff;
+    text-decoration:none;
+    font-size:13px;
+    font-weight:700;
+}
+
+.page{
+    min-height:calc(100vh - 50px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:40px 20px;
+}
+
+.auth-card{
+    width:100%;
+    max-width:520px;
+    background:white;
+    border:1px solid #d8eefc;
+    border-radius:22px;
+    padding:36px;
+    box-shadow:0 20px 45px rgba(8,43,99,0.12);
+}
+
+.auth-card h1{
+    color:#082B63;
+    font-size:32px;
+    margin-bottom:8px;
+    text-align:center;
+}
+
+.auth-card p{
+    color:#4b5563;
+    text-align:center;
+    margin-bottom:28px;
+    line-height:1.5;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+}
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-group.full{
+    grid-column:1 / -1;
+}
+
+.form-group label{
+    display:block;
+    font-size:14px;
+    font-weight:700;
+    color:#374151;
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    padding:13px 14px;
+    border:1px solid #cfe8f8;
+    border-radius:10px;
+    font-size:15px;
+    outline:none;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.form-group textarea{
+    min-height:90px;
+    resize:vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:#1565c0;
+}
+
+.auth-button{
+    width:100%;
+    padding:13px;
+    background:#1565c0;
+    color:white;
+    border:none;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:800;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.auth-button:hover{
+    background:#0f4f9e;
+}
+
+.auth-footer{
+    margin-top:22px;
+    text-align:center;
+    font-size:14px;
+    color:#4b5563;
+}
+
+.auth-footer a{
+    color:#1565c0;
+    font-weight:800;
+    text-decoration:none;
+}
+
+@media(max-width:650px){
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="index.html" class="brand">
+        <span class="brand-name">CLARITY</span>
+    </a>
+
+    <a href="login.html" class="nav-link">Login</a>
+</header>
+
+<main class="page">
+    <section class="auth-card">
+        <h1>Crear cuenta</h1>
+        <p>Regístrate para comenzar tu proceso de ingreso a Clarity Academy.</p>
+
+        <form>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" placeholder="Tu nombre">
+                </div>
+
+                <div class="form-group">
+                    <label>Discord</label>
+                    <input type="text" placeholder="usuario#0000">
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="tuemail@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label>País</label>
+                    <input type="text" placeholder="Tu país">
+                </div>
+
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" placeholder="Crear contraseña">
+                </div>
+
+                <div class="form-group">
+                    <label>Experiencia</label>
+                    <select>
+                        <option>Sin experiencia</option>
+                        <option>Principiante</option>
+                        <option>Intermedio</option>
+                        <option>Avanzado</option>
+                    </select>
+                </div>
+
+                <div class="form-group full">
+                    <label>Cuéntanos brevemente por qué quieres entrar</label>
+                    <textarea placeholder="Escribe tu respuesta..."></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="auth-button">Crear cuenta</button>
+        </form>
+
+        <div class="auth-footer">
+            ¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>

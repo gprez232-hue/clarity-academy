@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curso de Ingreso | Clarity Spin & Go Academy</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f4f9ff;
+    color:#1f2937;
+}
+
+.navbar{
+    height:50px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 7%;
+    background:#082B63;
+    border-bottom:2px solid #5bc0ff;
+    position:relative;
+}
+
+.brand{
+    text-decoration:none;
+}
+
+.brand-name{
+    font-size:20px;
+    font-weight:900;
+    color:#ffffff;
+    letter-spacing:1px;
+}
+
+.nav-menu{
+    display:flex;
+    gap:60px;
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+.nav-menu a{
+    text-decoration:none;
+    color:#eaf6ff;
+    font-size:13px;
+    font-weight:600;
+}
+
+.nav-menu a:hover{
+    color:#5bc0ff;
+}
+
+.auth{
+    display:flex;
+    gap:15px;
+}
+
+.login-link{
+    text-decoration:none;
+    color:#ffffff;
+    font-size:13px;
+    font-weight:600;
+}
+
+.register-link{
+    text-decoration:none;
+    color:#5bc0ff;
+    font-size:13px;
+    font-weight:700;
+}
+
+.page{
+    min-height:calc(100vh - 50px);
+    background:
+        radial-gradient(circle at top right, rgba(91,192,255,0.28), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, #eef8ff 100%);
+    padding:55px 7% 45px;
+}
+
+.container{
+    max-width:1100px;
+    margin:0 auto;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:45px;
+}
+
+.badge{
+    display:inline-block;
+    color:#1565c0;
+    background:#e5f6ff;
+    border:1px solid #bdeaff;
+    padding:7px 14px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:18px;
+}
+
+.header h1{
+    font-size:48px;
+    color:#1565c0;
+    margin-bottom:12px;
+}
+
+.header p{
+    font-size:18px;
+    color:#4b5563;
+    max-width:760px;
+    margin:0 auto;
+    line-height:1.6;
+}
+
+.course-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:22px;
+}
+
+.module-card{
+    background:white;
+    border:1px solid #d8eefc;
+    border-radius:20px;
+    padding:26px;
+    box-shadow:0 14px 34px rgba(8,43,99,0.09);
+    transition:0.2s;
+}
+
+.module-card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 18px 42px rgba(8,43,99,0.13);
+}
+
+.module-number{
+    display:inline-block;
+    background:#e5f6ff;
+    color:#1565c0;
+    border:1px solid #bdeaff;
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:800;
+    margin-bottom:14px;
+}
+
+.module-card h2{
+    color:#082B63;
+    font-size:21px;
+    margin-bottom:10px;
+}
+
+.module-card p{
+    color:#4b5563;
+    font-size:15px;
+    line-height:1.6;
+    margin-bottom:20px;
+}
+
+.module-button{
+    display:inline-block;
+    color:#1565c0;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:800;
+}
+
+.module-button:hover{
+    color:#0f4f9e;
+}
+
+.final-card{
+    margin-top:40px;
+    background:#082B63;
+    color:white;
+    border-radius:22px;
+    padding:35px;
+    text-align:center;
+    box-shadow:0 18px 40px rgba(8,43,99,0.14);
+}
+
+.final-card h2{
+    font-size:28px;
+    margin-bottom:10px;
+}
+
+.final-card p{
+    color:#dbeafe;
+    max-width:680px;
+    margin:0 auto 24px;
+    line-height:1.6;
+}
+
+.final-button{
+    display:inline-block;
+    padding:13px 30px;
+    background:#5bc0ff;
+    color:#082B63;
+    text-decoration:none;
+    font-size:15px;
+    font-weight:900;
+    border-radius:8px;
+}
+
+.final-button:hover{
+    background:#8fd8ff;
+}
+
+.footer{
+    background:#082B63;
+    color:white;
+    padding:16px 7%;
+}
+
+.footer-content{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:30px;
+}
+
+.footer-brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.footer-logo{
+    font-size:18px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.footer-subtitle-footer{
+    font-size:13px;
+    color:#5bc0ff;
+}
+
+.footer-copy{
+    font-size:12px;
+    color:#c7d9f5;
+}
+
+@media(max-width:900px){
+    .navbar{
+        height:auto;
+        padding:15px 5%;
+        flex-wrap:wrap;
+        gap:10px;
+    }
+
+    .nav-menu{
+        position:static;
+        transform:none;
+        width:100%;
+        justify-content:center;
+        order:3;
+        gap:25px;
+        flex-wrap:wrap;
+    }
+
+    .page{
+        padding:40px 5%;
+    }
+
+    .header h1{
+        font-size:36px;
+    }
+
+    .course-grid{
+        grid-template-columns:1fr;
+    }
+
+    .footer-content{
+        flex-direction:column;
+        text-align:center;
+        gap:10px;
+    }
+}
+</style>
+</head>
+
+<body data-private="true">
+
+<header class="navbar">
+    <a href="index.html" class="brand">
+        <span class="brand-name">CLARITY</span>
+    </a>
+
+    <nav class="nav-menu">
+        <a href="bancajes.html">Bancajes</a>
+        <a href="curso_ingreso.html">Curso de ingreso</a>
+        <a href="examen.html">Examen de ingreso</a>
+    </nav>
+
+    <div class="auth" id="authArea">
+    <a href="login.html" class="login-link">Login</a>
+    <a href="register.html" class="register-link">Register</a>
+</div>
+</header>
+
+<main class="page">
+    <div class="container">
+
+        <section class="header">
+            <span class="badge">Curso de ingreso</span>
+            <h1>Formación base Clarity</h1>
+            <p>
+                Completa los 10 módulos para aprender la metodología base de Clarity antes de presentar el examen de ingreso a la academia.
+            </p>
+        </section>
+
+        <section class="course-grid">
+
+            <div class="module-card">
+                <span class="module-number">Módulo 1</span>
+                <h2>Conceptos básicos de Spin & Go</h2>
+                <p>Conceptos esenciales para jugadores nuevos, glosario, estructura del formato y fundamentos generales.</p>
+                <a href="#" class="module-button">Ver módulo →</a>
+            </div>
+
+            <div class="module-card">
+                <span class="module-number">Módulo 2</span>
+                <h2>Preflop estrategia Clarity</h2>
+                <p>Introducción al sistema preflop de la academia, rangos, posiciones y decisiones base.</p>
+                <a href="#" class="module-button">Ver módulo →</a>
+            </div>
+
+            <div class="module-card">
+                <span class="module-number">Módulo 3</span>
+                <h2>3Way IP con iniciativa - BTN</h2>
+                <p>Juego en posición con iniciativa desde BTN en situaciones 3Way.</p>
+                <a href="#" class="module-button">Ver módulo →</a>
+            </div>
+
+            <div class="module-card">
+                <span class="module-number">Módulo 4</span>
+                <h2>3Way OOP sin iniciativa - BB vs BTN</h2>
+                <p>Defensa desde BB contra BTN cuando jugamos fuera de posición y sin iniciativa.</p>
+                <a href="#" class="module-button">Ver módulo →</a>
+            </div>
+
+            <div class="module-card">
+                <span class="module-number">Módulo 5</span>
+                <h2>3Way OOP con iniciativa - SB vs BB</h2>
+                <p>Juego desde SB contra BB cuando tenemos iniciativa en botes 3Way.</p>
+                <a href="#" class="module-button">Ver módulo →</a>
+            </div>
+
+            <div class="module-card">
+                <span class="module-number">Módulo 6</span>
+                <h2>3Way OOP sin iniciativa - BB vs SB</h2>
+                <p>Defensa desde BB contra SB en botes fuera de posición y sin iniciativa.</p>
+                <a href="#" class="module-button">Ver módulo →</a>
+            </div>
+
+            <div class="module-card">
+                <span class="module-number">Módulo 7</span>
+                <h2>3Way botes multiway</h2>
+                <p>Estrategia básica para jugar botes multiway en situaciones 3Way.</p>
+                <a href="#" class="module-button">Ver módulo →</a>
+            </div>
+
+            <div class="module-card">
+                <span class="module-number">Módulo 8</span>
+                <h2>HU SB IP con iniciativa</h2>
+                <p>Juego heads-up desde SB en posición y con iniciativa.</p>
+                <a href="#" class="module-button">Ver módulo →</a>
+            </div>
+
+            <div class="module-card">
+                <span class="module-number">Módulo 9</span>
+                <h2>HU BB OOP sin iniciativa</h2>
+                <p>Defensa heads-up desde BB fuera de posición y sin iniciativa.</p>
+                <a href="#" class="module-button">Ver módulo →</a>
+            </div>
+
+            <div class="module-card">
+                <span class="module-number">Módulo 10</span>
+                <h2>HU BB botes isolados</h2>
+                <p>Estrategia para botes isolados desde BB en situaciones heads-up.</p>
+                <a href="#" class="module-button">Ver módulo →</a>
+            </div>
+
+        </section>
+
+        <section class="final-card">
+            <h2>¿Terminaste el curso?</h2>
+            <p>
+                Cuando completes los módulos, presenta el examen de ingreso para que podamos evaluar tu nivel y decidir si estás listo para entrar a Clarity.
+            </p>
+            <a href="examen-ingreso.html" class="final-button">Ir al examen</a>
+        </section>
+
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-brand">
+            <span class="footer-logo">CLARITY</span>
+            <span class="footer-subtitle-footer">Spin & Go Academy</span>
+        </div>
+
+        <div class="footer-copy">
+            © 2026 Clarity Spin & Go Academy. Todos los derechos reservados.
+        </div>
+    </div>
+</footer>
+
+<script src="auth.js"></script>
+
+</body>
+</html>
+
+</body>
+</html>
