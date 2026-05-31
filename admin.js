@@ -39,7 +39,7 @@ async function loadAdminPanel(){
     }
 
     const { data: applicants, error: applicantsError } = await adminSupabase
-        .from("Applicants")
+        .from("applicants")
         .select("*")
         .order("created_at", { ascending: false });
 
