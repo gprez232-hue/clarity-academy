@@ -34,7 +34,7 @@ async function loadAdminPanel(){
         .maybeSingle();
 
     if(adminError || !adminData){
-        window.location.href = "no-access.html";
+        window.location.href = "no_access.html";
         return;
     }
 
