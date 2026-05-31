@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clarity Spin & Go Academy</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f4f9ff;
+    color:#1f2937;
+}
+
+.navbar{
+    height:50px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 7%;
+    background:#082B63;
+    border-bottom:2px solid #5bc0ff;
+    position:relative;
+}
+
+.brand{
+    text-decoration:none;
+}
+
+.brand-name{
+    font-size:20px;
+    font-weight:900;
+    color:#ffffff;
+    letter-spacing:1px;
+}
+
+.nav-menu{
+    display:flex;
+    gap:60px;
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+.nav-menu a{
+    text-decoration:none;
+    color:#eaf6ff;
+    font-size:13px;
+    font-weight:600;
+}
+
+.nav-menu a:hover{
+    color:#5bc0ff;
+}
+
+.auth{
+    display:flex;
+    gap:15px;
+    align-items:center;
+}
+
+.login-link{
+    text-decoration:none;
+    color:#ffffff;
+    font-size:13px;
+    font-weight:600;
+}
+
+.register-link{
+    text-decoration:none;
+    color:#5bc0ff;
+    font-size:13px;
+    font-weight:700;
+}
+
+.user-name{
+    color:#ffffff;
+    font-size:13px;
+    font-weight:700;
+}
+
+.homepage{
+    min-height:calc(100vh - 50px);
+    background:
+        radial-gradient(circle at top right, rgba(91,192,255,0.28), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, #eef8ff 100%);
+    padding:55px 7% 45px;
+}
+
+.hero{
+    max-width:1100px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    align-items:center;
+    gap:60px;
+}
+
+.hero-content{
+    text-align:left;
+}
+
+.hero-badge{
+    display:inline-block;
+    color:#1565c0;
+    background:#e5f6ff;
+    border:1px solid #bdeaff;
+    padding:7px 14px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:18px;
+}
+
+.hero-title{
+    font-size:74px;
+    font-weight:900;
+    color:#1565c0;
+    letter-spacing:2px;
+    line-height:0.9;
+}
+
+.hero-subtitle{
+    font-size:27px;
+    font-weight:700;
+    color:#374151;
+    margin-top:2px;
+    margin-bottom:28px;
+}
+
+.hero-text{
+    font-size:25px;
+    font-weight:800;
+    color:#111827;
+    line-height:1.35;
+    max-width:650px;
+    margin-bottom:28px;
+}
+
+.hero-small{
+    font-size:16px;
+    color:#4b5563;
+    line-height:1.6;
+    max-width:580px;
+    margin-bottom:32px;
+}
+
+.hero-actions{
+    display:flex;
+    gap:14px;
+    align-items:center;
+}
+
+.hero-button{
+    display:inline-block;
+    padding:13px 30px;
+    background:#1565c0;
+    color:white;
+    text-decoration:none;
+    font-size:15px;
+    font-weight:800;
+    border-radius:8px;
+    transition:0.2s;
+    box-shadow:0 10px 22px rgba(21,101,192,0.22);
+}
+
+.hero-button:hover{
+    background:#0f4f9e;
+    transform:translateY(-1px);
+}
+
+.secondary-button{
+    display:inline-block;
+    padding:13px 24px;
+    color:#1565c0;
+    text-decoration:none;
+    font-size:15px;
+    font-weight:800;
+}
+
+.hero-card{
+    background:white;
+    border:1px solid #d8eefc;
+    border-radius:22px;
+    padding:34px;
+    box-shadow:0 20px 45px rgba(8,43,99,0.12);
+}
+
+.card-title{
+    font-size:22px;
+    font-weight:900;
+    color:#082B63;
+    margin-bottom:22px;
+}
+
+.benefits{
+    display:grid;
+    gap:18px;
+}
+
+.benefit{
+    padding:18px;
+    border-radius:14px;
+    background:#f3fbff;
+    border:1px solid #d8eefc;
+}
+
+.benefit strong{
+    display:block;
+    color:#1565c0;
+    font-size:16px;
+    margin-bottom:6px;
+}
+
+.benefit span{
+    color:#4b5563;
+    font-size:14px;
+    line-height:1.5;
+}
+
+.discord-section{
+    max-width:1100px;
+    margin:55px auto 0;
+    background:white;
+    border:1px solid #d8eefc;
+    border-radius:22px;
+    padding:32px 38px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:30px;
+    box-shadow:0 18px 40px rgba(8,43,99,0.10);
+}
+
+.discord-text{
+    text-align:left;
+}
+
+.discord-text h2{
+    font-size:26px;
+    color:#082B63;
+    margin-bottom:8px;
+}
+
+.discord-text p{
+    color:#4b5563;
+    font-size:15px;
+    line-height:1.6;
+    max-width:620px;
+}
+
+.discord-button{
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 24px;
+    background:#5865F2;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:800;
+    white-space:nowrap;
+    transition:0.2s;
+}
+
+.discord-button:hover{
+    transform:translateY(-1px);
+    background:#4752c4;
+}
+
+.discord-icon{
+    width:28px;
+    height:28px;
+    display:grid;
+    place-items:center;
+    background:white;
+    color:#5865F2;
+    border-radius:50%;
+    font-size:17px;
+    font-weight:900;
+}
+
+.footer{
+    background:#082B63;
+    color:white;
+    padding:16px 7%;
+}
+
+.footer-content{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:30px;
+}
+
+.footer-brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.footer-logo{
+    font-size:18px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.footer-subtitle-footer{
+    font-size:13px;
+    color:#5bc0ff;
+}
+
+.footer-copy{
+    font-size:12px;
+    color:#c7d9f5;
+}
+
+@media(max-width:900px){
+    .navbar{
+        height:auto;
+        padding:15px 5%;
+        flex-wrap:wrap;
+        gap:10px;
+    }
+
+    .nav-menu{
+        position:static;
+        transform:none;
+        width:100%;
+        justify-content:center;
+        order:3;
+        gap:25px;
+    }
+
+    .homepage{
+        padding:40px 5%;
+    }
+
+    .hero{
+        grid-template-columns:1fr;
+        text-align:center;
+        gap:35px;
+    }
+
+    .hero-content{
+        text-align:center;
+    }
+
+    .hero-title{
+        font-size:54px;
+    }
+
+    .hero-subtitle{
+        font-size:22px;
+    }
+
+    .hero-text{
+        font-size:22px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .hero-small{
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .hero-actions{
+        justify-content:center;
+        flex-wrap:wrap;
+    }
+
+    .discord-section{
+        flex-direction:column;
+        text-align:center;
+        padding:28px 22px;
+    }
+
+    .discord-text{
+        text-align:center;
+    }
+
+    .footer-content{
+        flex-direction:column;
+        text-align:center;
+        gap:10px;
+    }
+}
+
+.loading-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(8,43,99,0.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+}
+
+.loading-card{
+    background:white;
+    padding:32px 42px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 20px 45px rgba(8,43,99,0.20);
+}
+
+.spinner{
+    width:42px;
+    height:42px;
+    border:4px solid #d8eefc;
+    border-top:4px solid #1565c0;
+    border-radius:50%;
+    animation:spin 0.8s linear infinite;
+    margin:0 auto 16px;
+}
+
+.loading-card p{
+    color:#082B63;
+    font-size:15px;
+    font-weight:800;
+    margin:0;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.footer-admin{
+    margin-top:14px;
+    text-align:center;
+}
+
+.footer-admin a{
+    color:#7c8ca5;
+    text-decoration:none;
+    font-size:12px;
+    font-weight:600;
+    transition:0.2s;
+}
+
+.footer-admin a:hover{
+    color:#1565c0;
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="index.html" class="brand">
+        <span class="brand-name">CLARITY</span>
+    </a>
+
+    <nav class="nav-menu">
+        <a href="bancajes.html">Bancajes</a>
+        <a href="curso_ingreso.html">Curso de ingreso</a>
+        <a href="examen.html">Examen de ingreso</a>
+    </nav>
+
+    <div class="auth" id="authArea">
+    <a href="login.html" class="login-link">Login</a>
+    <a href="register.html" class="register-link">Register</a>
+</div>
+</header>
+
+<main class="homepage">
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">Academia de Spin & Go</span>
+
+            <h1 class="hero-title">CLARITY</h1>
+            <h2 class="hero-subtitle">Spin & Go Academy</h2>
+
+            <p class="hero-text">
+                Regístrate hoy y comienza tu camino hacia el póker profesional.
+            </p>
+
+            <p class="hero-small">
+                Aprende con una estructura clara, accede a contenido privado y prepárate para escalar niveles con acompañamiento real.
+            </p>
+
+            <div class="hero-actions">
+                <a href="register.html" class="hero-button">Registrarme</a>
+                <a href="bancajes.html" class="secondary-button">Ver oferta</a>
+            </div>
+        </div>
+
+        <div class="hero-card">
+            <h3 class="card-title">¿Qué ofrece Clarity?</h3>
+
+            <div class="benefits">
+                <div class="benefit">
+                    <strong>Banca para jugadores</strong>
+                    <span>Plan de crecimiento desde niveles bajos con gestión guiada.</span>
+                </div>
+
+                <div class="benefit">
+                    <strong>Curso de ingreso</strong>
+                    <span>Aprende las bases necesarias antes de empezar a competir.</span>
+                </div>
+
+                <div class="benefit">
+                    <strong>Coaching y revisiones</strong>
+                    <span>Clases, seguimiento y corrección de errores para mejorar tu juego.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="discord-section">
+        <div class="discord-text">
+            <h2>Únete al Discord de Clarity</h2>
+            <p>
+                Forma parte de nuestra comunidad, comparte manos, recibe anuncios importantes
+                y conecta con otros jugadores de la academia.
+            </p>
+        </div>
+
+        <a href="https://discord.gg/BAEyFeU3ep" target="_blank" class="discord-button">
+            <span class="discord-icon">☁</span>
+            Unirme al Discord
+        </a>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-brand">
+            <span class="footer-logo">CLARITY</span>
+            <span class="footer-subtitle-footer">Spin & Go Academy</span>
+        </div>
+
+        <div class="footer-copy">
+            © 2026 Clarity Spin & Go Academy. Todos los derechos reservados.
+        </div>
+        <div class="footer-admin">
+    <a href="admin.html">Acceso administrativo</a>
+</div>
+    </div>
+</footer>
+<div id="loadingModal" class="loading-overlay">
+    <div class="loading-card">
+        <div class="spinner"></div>
+        <p>Cargando...</p>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+
+</body>
+</html>
