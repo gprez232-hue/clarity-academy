@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Módulo 6 | Clarity Academy</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:linear-gradient(180deg,#ffffff 0%,#eef8ff 100%);
+    color:#1f2937;
+    min-height:100vh;
+}
+
+.page{
+    padding:35px 5%;
+}
+
+.topbar{
+    max-width:1350px;
+    margin:0 auto 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:#082B63;
+    font-size:24px;
+    font-weight:900;
+}
+
+.back-link{
+    color:#1565c0;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:800;
+}
+
+.module-layout{
+    max-width:1350px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1fr 360px;
+    gap:24px;
+}
+
+.video-card,
+.notes-card{
+    background:white;
+    border:1px solid #d8eefc;
+    border-radius:22px;
+    box-shadow:0 20px 45px rgba(8,43,99,0.12);
+    padding:24px;
+}
+
+.video-card h1{
+    color:#082B63;
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+.video-card p{
+    color:#4b5563;
+    margin-bottom:22px;
+    line-height:1.6;
+}
+
+.video-box{
+    width:100%;
+    aspect-ratio:16/9;
+    background:#082B63;
+    border-radius:16px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-size:18px;
+    font-weight:900;
+}
+
+.video-box iframe{
+    width:100%;
+    height:100%;
+    border:0;
+}
+
+.complete-btn{
+    margin-top:22px;
+    width:100%;
+    padding:15px;
+    background:#1565c0;
+    color:white;
+    border:none;
+    border-radius:12px;
+    font-size:15px;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.complete-btn:hover{
+    background:#0f4f9e;
+}
+
+.complete-btn.completed{
+    background:#16a34a;
+}
+
+.notes-card h2{
+    color:#082B63;
+    font-size:22px;
+    margin-bottom:10px;
+}
+
+.notes-card p{
+    color:#4b5563;
+    font-size:14px;
+    line-height:1.5;
+    margin-bottom:16px;
+}
+
+textarea{
+    width:100%;
+    min-height:430px;
+    resize:vertical;
+    padding:14px;
+    border:1px solid #cfe8f8;
+    border-radius:12px;
+    outline:none;
+    font-size:14px;
+    line-height:1.6;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+textarea:focus{
+    border-color:#1565c0;
+}
+
+.save-status{
+    margin-top:12px;
+    text-align:center;
+    color:#1565c0;
+    font-size:13px;
+    font-weight:800;
+}
+
+.loading-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(8,43,99,0.55);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+}
+
+.loading-card{
+    background:white;
+    padding:32px 42px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 20px 45px rgba(8,43,99,0.20);
+}
+
+.spinner{
+    width:42px;
+    height:42px;
+    border:4px solid #d8eefc;
+    border-top:4px solid #1565c0;
+    border-radius:50%;
+    animation:spin 0.8s linear infinite;
+    margin:0 auto 16px;
+}
+
+.loading-card p{
+    color:#082B63;
+    font-size:15px;
+    font-weight:800;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg)}
+}
+
+@media(max-width:950px){
+    .module-layout{
+        grid-template-columns:1fr;
+    }
+
+    textarea{
+        min-height:260px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="topbar">
+        <div class="logo">CLARITY ACADEMY</div>
+        <a href="curso_ingreso.html" class="back-link">← Volver al curso</a>
+    </div>
+
+    <div class="module-layout">
+
+        <section class="video-card">
+          <h1>Módulo 6: 3Way OOP sin iniciativa - BB vs SB</h1>
+<p>
+Aprende a defender desde BB contra SB cuando juegas fuera de posición y sin iniciativa en botes 3Way. Estudia el video, toma notas y completa el módulo cuando termines.
+</p>
+
+            <div class="video-box">
+             <span>VIDEO DEL MÓDULO 6</span>
+            </div>
+
+            <button id="completeBtn" class="complete-btn">
+                Haz click aquí cuando termines de estudiar el video
+            </button>
+        </section>
+
+        <aside class="notes-card">
+            <h2>Notas de la clase</h2>
+            <p>
+                Escribe aquí tus apuntes. Se guardarán automáticamente para que puedas volver a estudiarlos después.
+            </p>
+
+            <textarea id="notesInput" placeholder="Toma notas de esta clase..."></textarea>
+
+            <div id="saveStatus" class="save-status">
+                Cargando notas...
+            </div>
+        </aside>
+
+    </div>
+
+</div>
+
+<div id="loadingModal" class="loading-overlay">
+    <div class="loading-card">
+        <div class="spinner"></div>
+        <p>Verificando acceso...</p>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const MODULE_SUPABASE_URL = "https://sxangxdumgoarftpidex.supabase.co";
+
+const MODULE_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN4YW5neGR1bWdvYXJmdHBpZGV4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyMTAyNjQsImV4cCI6MjA5NTc4NjI2NH0.YIrylgNL3n8vzROjxLLyFTT_k1-TowcLQ0ALjNZzLYc";
+
+const moduleSupabase = supabase.createClient(
+    MODULE_SUPABASE_URL,
+    MODULE_SUPABASE_ANON_KEY
+);
+
+const MODULE_ID = "modulo_6";
+
+const loadingModal = document.getElementById("loadingModal");
+const notesInput = document.getElementById("notesInput");
+const saveStatus = document.getElementById("saveStatus");
+const completeBtn = document.getElementById("completeBtn");
+
+let currentUserEmail = "";
+let progressRowId = null;
+let saveTimer = null;
+
+async function initModule(){
+    const { data, error } = await moduleSupabase.auth.getSession();
+
+    if(error || !data.session){
+        window.location.href = "login.html";
+        return;
+    }
+
+    currentUserEmail = data.session.user.email.toLowerCase();
+
+    await loadProgress();
+
+    if(loadingModal){
+        loadingModal.style.display = "none";
+    }
+}
+
+async function loadProgress(){
+    const { data, error } = await moduleSupabase
+        .from("module_progress")
+        .select("*")
+        .eq("user_email", currentUserEmail)
+        .eq("module_id", MODULE_ID)
+        .maybeSingle();
+
+    if(error){
+        console.error(error);
+        saveStatus.textContent = "Error cargando notas.";
+        return;
+    }
+
+    if(data){
+        progressRowId = data.id;
+        notesInput.value = data.notes || "";
+
+        if(data.completed){
+            completeBtn.textContent = "Módulo completado ✅";
+            completeBtn.classList.add("completed");
+        }
+    }else{
+        await createProgressRow();
+    }
+
+    saveStatus.textContent = "Notas listas.";
+}
+
+async function createProgressRow(){
+    const { data, error } = await moduleSupabase
+        .from("module_progress")
+        .insert([
+            {
+                user_email: currentUserEmail,
+                module_id: MODULE_ID,
+                notes: "",
+                completed: false,
+                updated_at: new Date().toISOString()
+            }
+        ])
+        .select()
+        .single();
+
+    if(error){
+        console.error(error);
+        saveStatus.textContent = "Error creando progreso.";
+        return;
+    }
+
+    progressRowId = data.id;
+}
+
+async function saveNotes(){
+    if(!progressRowId){
+        return;
+    }
+
+    saveStatus.textContent = "Guardando...";
+
+    const { error } = await moduleSupabase
+        .from("module_progress")
+        .update({
+            notes: notesInput.value,
+            updated_at: new Date().toISOString()
+        })
+        .eq("id", progressRowId);
+
+    if(error){
+        console.error(error);
+        saveStatus.textContent = "Error al guardar.";
+        return;
+    }
+
+    saveStatus.textContent = "Notas guardadas automáticamente.";
+}
+
+notesInput.addEventListener("input", function(){
+    clearTimeout(saveTimer);
+
+    saveStatus.textContent = "Escribiendo...";
+
+    saveTimer = setTimeout(() => {
+        saveNotes();
+    }, 800);
+});
+
+completeBtn.addEventListener("click", async function(){
+    if(!progressRowId){
+        return;
+    }
+
+    const { error } = await moduleSupabase
+        .from("module_progress")
+        .update({
+            completed: true,
+            notes: notesInput.value,
+            updated_at: new Date().toISOString()
+        })
+        .eq("id", progressRowId);
+
+    if(error){
+        console.error(error);
+        saveStatus.textContent = "Error al completar módulo.";
+        return;
+    }
+
+    completeBtn.textContent = "Módulo completado ✅";
+    completeBtn.classList.add("completed");
+    saveStatus.textContent = "Módulo completado y notas guardadas.";
+});
+
+initModule();
+</script>
+
+</body>
+</html>
