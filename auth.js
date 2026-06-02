@@ -24,14 +24,14 @@
             data.user.email.split("@")[0];
 
         authArea.innerHTML = `
-            <span style="color:white;font-size:13px;font-weight:700;">
-                Hola, ${username}
-            </span>
+    <span class="user-name" title="Hola, ${username}">
+        Hola, ${username}
+    </span>
 
-            <a href="#" id="logoutBtn" class="register-link">
-                Cerrar sesión
-            </a>
-        `;
+    <a href="#" id="logoutBtn" class="register-link">
+        Cerrar sesión
+    </a>
+`;
 
         document.getElementById("logoutBtn").addEventListener("click", async function(e){
 
