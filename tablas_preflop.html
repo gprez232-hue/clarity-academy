@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tablas Preflop | Clarity Spin & Go Academy</title>
 
-<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="website icon" type="png" href="favicon-32x32.png">
+
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -232,6 +233,21 @@ body{
     max-width:100%;
     border-radius:8px;
     background:white;
+}
+
+.big-defense{
+    width:700px !important;
+    max-width:none !important;
+}
+
+.big-cbet-flop{
+    width:700px !important;
+    max-width:none !important;
+}
+
+.big-cbet-tyr{
+    width:700px !important;
+    max-width:none !important;
 }
 
 .empty-state{
@@ -656,17 +672,21 @@ function showImage(spot, stack){
 function showExtraTable(type){
 
     let imgPath = "";
+    let imgClass = "";
 
     if(type === "Defensa"){
         imgPath = "images/Defensa/general.png";
+        imgClass = "big-defense";
     }
 
     if(type === "Cbet Flop"){
         imgPath = "images/Cbet_Flop/general.png";
+        imgClass = "big-cbet-flop";
     }
 
     if(type === "Cbet TYR"){
         imgPath = "images/Cbet_TYR/general.png";
+        imgClass = "big-cbet-tyr";
     }
 
     document.getElementById("title").innerText = type;
@@ -675,7 +695,7 @@ function showExtraTable(type){
 
     document.getElementById("table").innerHTML = `
         <h3>${type}</h3>
-        <img src="${imgPath}" onerror="this.style.display='none'; this.parentElement.innerHTML += '<div class=&quot;empty-state&quot;>Imagen no encontrada. Revisa la carpeta: ${imgPath}</div>';">
+        <img class="${imgClass}" src="${imgPath}" onerror="this.style.display='none'; this.parentElement.innerHTML += '<div class=&quot;empty-state&quot;>Imagen no encontrada. Revisa la carpeta: ${imgPath}</div>';">
     `;
 }
 
