@@ -351,6 +351,46 @@ body{
     color:white;
     font-size:26px;
 }
+
+.module-card.locked{
+    opacity:0.65;
+    filter:grayscale(0.4);
+    background:#f3f4f6;
+}
+
+.module-card.completed{
+    border:2px solid #16a34a;
+}
+
+.locked-message{
+    margin-top:12px;
+    color:#dc2626;
+    font-size:14px;
+    font-weight:800;
+}
+
+.completed-message{
+    margin-top:12px;
+    color:#16a34a;
+    font-size:14px;
+    font-weight:900;
+}
+
+.module-button.locked-button{
+    color:#6b7280;
+    cursor:not-allowed;
+}
+
+.final-card.locked{
+    opacity:0.7;
+    filter:grayscale(0.4);
+}
+
+.final-button.locked-button{
+    background:#d1d5db;
+    color:#6b7280;
+    cursor:not-allowed;
+}
 </style>
 </head>
 
@@ -501,6 +541,104 @@ body{
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="private.js"></script>
 <script src="auth.js"></script>
+<script>
+const COURSE_SUPABASE_URL = "https://sxangxdumgoarftpidex.supabase.co";
 
+const COURSE_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN4YW5neGR1bWdvYXJmdHBpZGV4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyMTAyNjQsImV4cCI6MjA5NTc4NjI2NH0.YIrylgNL3n8vzROjxLLyFTT_k1-TowcLQ0ALjNZzLYc";
+
+const courseSupabase = supabase.createClient(
+    COURSE_SUPABASE_URL,
+    COURSE_SUPABASE_ANON_KEY
+);
+
+document.addEventListener("DOMContentLoaded", async function(){
+
+    const { data, error } = await courseSupabase.auth.getSession();
+
+    if(error || !data.session){
+        return;
+    }
+
+    const userEmail = data.session.user.email.toLowerCase();
+
+    const { data: progress, error: progressError } = await courseSupabase
+        .from("module_progress")
+        .select("module_id, completed")
+        .eq("user_email", userEmail);
+
+    if(progressError){
+        console.error(progressError);
+        return;
+    }
+
+    const completedModules = {};
+
+    progress.forEach(row => {
+        completedModules[row.module_id] = row.completed;
+    });
+
+    const moduleCards = document.querySelectorAll(".module-card");
+
+    moduleCards.forEach((card, index) => {
+        const moduleNumber = index + 1;
+        const moduleId = "modulo_" + moduleNumber;
+        const previousModuleId = "modulo_" + (moduleNumber - 1);
+        const button = card.querySelector(".module-button");
+
+        const isCompleted = completedModules[moduleId] === true;
+        const isUnlocked = moduleNumber === 1 || completedModules[previousModuleId] === true;
+
+        if(isCompleted){
+            card.classList.add("completed");
+
+            const msg = document.createElement("div");
+            msg.className = "completed-message";
+            msg.textContent = "✅ Módulo completado";
+            card.appendChild(msg);
+        }
+
+        if(!isUnlocked){
+            card.classList.add("locked");
+
+            if(button){
+                button.removeAttribute("href");
+                button.classList.add("locked-button");
+                button.textContent = "Bloqueado 🔒";
+
+                button.addEventListener("click", function(e){
+                    e.preventDefault();
+                });
+            }
+
+            const msg = document.createElement("div");
+            msg.className = "locked-message";
+            msg.textContent = "🔒 Completa el módulo anterior para desbloquear este contenido.";
+            card.appendChild(msg);
+        }
+    });
+
+    const finalCard = document.querySelector(".final-card");
+    const finalButton = document.querySelector(".final-button");
+
+    if(completedModules["modulo_10"] !== true){
+        finalCard.classList.add("locked");
+        finalButton.removeAttribute("href");
+        finalButton.classList.add("locked-button");
+        finalButton.textContent = "Examen bloqueado 🔒";
+
+        finalButton.addEventListener("click", function(e){
+            e.preventDefault();
+        });
+
+        const msg = document.createElement("p");
+        msg.style.marginTop = "14px";
+        msg.style.color = "#fecaca";
+        msg.style.fontWeight = "900";
+        msg.textContent = "Completa todos los módulos para desbloquear el examen.";
+        finalCard.appendChild(msg);
+    }
+
+});
+</script>
 </body>
 </html>
