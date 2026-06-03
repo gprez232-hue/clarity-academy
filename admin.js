@@ -11,6 +11,8 @@ const loadingModal = document.getElementById("loadingModal");
 const statusMessage = document.getElementById("statusMessage");
 const applicantsTable = document.getElementById("applicantsTable");
 const applicantCount = document.getElementById("applicantCount");
+const progressTable = document.getElementById("progressTable");
+const progressCount = document.getElementById("progressCount");
 
 const reasonModal = document.getElementById("reasonModal");
 const reasonText = document.getElementById("reasonText");
@@ -51,7 +53,8 @@ async function loadAdminPanel(){
     }
 
     renderApplicants(applicants);
-    hideLoading();
+await loadCourseProgress();
+hideLoading();
 }
 
 function renderApplicants(applicants){
@@ -119,6 +122,142 @@ if(reasonModal){
         if(e.target === reasonModal){
             closeModal();
         }
+    });
+}
+async function loadCourseProgress(){
+
+    const { data: progress, error } = await adminSupabase
+        .from("module_progress")
+        .select("*")
+        .order("user_email", { ascending:true })
+        .order("module_id", { ascending:true });
+
+    if(error){
+        console.error(error);
+        progressTable.innerHTML = `
+            <tr>
+                <td colspan="5">Error cargando progreso del curso.</td>
+            </tr>
+        `;
+        return;
+    }
+
+    renderCourseProgress(progress);
+}
+
+function renderCourseProgress(progress){
+
+    progressTable.innerHTML = "";
+
+    if(!progress || progress.length === 0){
+        progressCount.textContent = "0 alumnos";
+        progressTable.innerHTML = `
+            <tr>
+                <td colspan="5">Todavía no hay progreso registrado.</td>
+            </tr>
+        `;
+        return;
+    }
+
+    const grouped = {};
+
+    progress.forEach(row => {
+        const email = row.user_email || "Sin email";
+
+        if(!grouped[email]){
+            grouped[email] = [];
+        }
+
+        grouped[email].push(row);
+    });
+
+    const emails = Object.keys(grouped);
+
+    progressCount.textContent =
+        emails.length === 1
+        ? "1 alumno"
+        : `${emails.length} alumnos`;
+
+    emails.forEach(email => {
+
+        const modules = grouped[email];
+
+        const completedCount = modules.filter(m => m.completed).length;
+
+        const headerRow = document.createElement("tr");
+
+        headerRow.innerHTML = `
+            <td colspan="5" style="
+                background:#e5f6ff;
+                color:#082B63;
+                font-weight:900;
+            ">
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:15px;
+                ">
+                    <span>
+                        ${escapeHTML(email)} — ${completedCount}/10 módulos completados
+                    </span>
+
+                    <button class="reason-button toggle-progress">
+                        Ver progreso
+                    </button>
+                </div>
+            </td>
+        `;
+
+        progressTable.appendChild(headerRow);
+
+        const moduleRows = [];
+
+        modules
+            .sort((a, b) => {
+                const numA = parseInt(a.module_id.replace("modulo_", ""));
+                const numB = parseInt(b.module_id.replace("modulo_", ""));
+                return numA - numB;
+            })
+            .forEach(row => {
+
+                const tr = document.createElement("tr");
+                tr.style.display = "none";
+
+                const updatedDate = row.updated_at
+                    ? new Date(row.updated_at).toLocaleString("es-AR")
+                    : "-";
+
+                tr.innerHTML = `
+                    <td></td>
+                    <td>${escapeHTML(row.module_id || "-")}</td>
+                    <td>${row.completed ? "✅ Sí" : "❌ No"}</td>
+                    <td>${updatedDate}</td>
+                    <td>
+                        <button class="reason-button">
+                            Ver notas
+                        </button>
+                    </td>
+                `;
+
+                tr.querySelector(".reason-button").addEventListener("click", function(){
+                    openReasonModal(row.notes || "Sin notas registradas.");
+                });
+
+                moduleRows.push(tr);
+                progressTable.appendChild(tr);
+            });
+
+        headerRow.querySelector(".toggle-progress").addEventListener("click", function(){
+
+            const isHidden = moduleRows[0]?.style.display === "none";
+
+            moduleRows.forEach(row => {
+                row.style.display = isHidden ? "table-row" : "none";
+            });
+
+            this.textContent = isHidden ? "Ocultar progreso" : "Ver progreso";
+        });
     });
 }
 
