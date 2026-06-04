@@ -23,10 +23,16 @@
             data.user.user_metadata?.name ||
             data.user.email.split("@")[0];
 
-        authArea.innerHTML = `
-    <span class="user-name" title="Hola, ${username}">
-        Hola, ${username}
-    </span>
+       authArea.innerHTML = `
+    <div class="user-menu">
+        <span class="user-greeting" title="Mi cuenta: ${username}">
+            ${username}
+        </span>
+
+        <div class="user-dropdown">
+            <a href="dashboard.html">📊 Mi dashboard</a>
+        </div>
+    </div>
 
     <a href="#" id="logoutBtn" class="register-link">
         Cerrar sesión

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<link rel="website icon" type="png" href="favicon-32x32.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Dashboard | Clarity Academy</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f4f9ff;
+    color:#1f2937;
+}
+
+.navbar{
+    height:50px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 5%;
+    background:#082B63;
+    border-bottom:2px solid #5bc0ff;
+    gap:20px;
+}
+
+.brand{text-decoration:none}
+
+.brand-name{
+    font-size:20px;
+    font-weight:900;
+    color:white;
+    letter-spacing:1px;
+}
+
+.diamond{
+    color:white;
+    font-size:26px;
+}
+
+.nav-link{
+    color:#5bc0ff;
+    text-decoration:none;
+    font-size:13px;
+    font-weight:800;
+}
+
+.page{
+    min-height:calc(100vh - 50px);
+    background:
+        radial-gradient(circle at top right, rgba(91,192,255,0.28), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, #eef8ff 100%);
+    padding:55px 7%;
+}
+
+.container{
+    max-width:1000px;
+    margin:0 auto;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.header h1{
+    color:#1565c0;
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.header p{
+    color:#4b5563;
+    font-size:17px;
+}
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+}
+
+.card{
+    background:white;
+    border:1px solid #d8eefc;
+    border-radius:22px;
+    padding:28px;
+    box-shadow:0 18px 40px rgba(8,43,99,0.10);
+}
+
+.card h2{
+    color:#082B63;
+    font-size:22px;
+    margin-bottom:16px;
+}
+
+.info-line{
+    margin-bottom:12px;
+    color:#4b5563;
+    font-size:15px;
+}
+
+.info-line strong{
+    color:#1565c0;
+}
+
+.progress-number{
+    font-size:42px;
+    font-weight:900;
+    color:#1565c0;
+    margin-bottom:12px;
+}
+
+.progress-bar{
+    width:100%;
+    height:16px;
+    background:#e5f6ff;
+    border-radius:999px;
+    overflow:hidden;
+    border:1px solid #bdeaff;
+}
+
+.progress-fill{
+    height:100%;
+    width:0%;
+    background:#1565c0;
+    border-radius:999px;
+    transition:0.3s;
+}
+
+.module-list{
+    margin-top:18px;
+    display:grid;
+    gap:8px;
+}
+
+.module-item{
+    padding:10px 12px;
+    background:#f3fbff;
+    border:1px solid #d8eefc;
+    border-radius:10px;
+    font-size:14px;
+    font-weight:800;
+    color:#374151;
+}
+
+.completed{
+    color:#16a34a;
+}
+
+.pending{
+    color:#dc2626;
+}
+
+.bankroll{
+    font-size:36px;
+    font-weight:900;
+    color:#16a34a;
+    margin-top:10px;
+}
+
+.loading-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(8,43,99,0.55);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+}
+
+.loading-card{
+    background:white;
+    padding:32px 42px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 20px 45px rgba(8,43,99,0.20);
+}
+
+.spinner{
+    width:42px;
+    height:42px;
+    border:4px solid #d8eefc;
+    border-top:4px solid #1565c0;
+    border-radius:50%;
+    animation:spin 0.8s linear infinite;
+    margin:0 auto 16px;
+}
+
+.loading-card p{
+    color:#082B63;
+    font-size:15px;
+    font-weight:800;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg)}
+}
+
+@media(max-width:800px){
+    .dashboard-grid{
+        grid-template-columns:1fr;
+    }
+
+    .header h1{
+        font-size:32px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="index.html" class="brand">
+        <span class="brand-name">
+            CLARITY <span class="diamond">♦</span>
+        </span>
+    </a>
+
+    <a href="curso_ingreso.html" class="nav-link">Volver a la pagina principal</a>
+</header>
+
+<main class="page">
+    <div class="container">
+
+        <section class="header">
+            <h1 id="welcomeTitle">Mi Dashboard</h1>
+            <p>Panel personal del alumno dentro de Clarity Academy.</p>
+        </section>
+
+        <section class="dashboard-grid">
+
+            <div class="card">
+                <h2>Datos de la cuenta</h2>
+
+                <div class="info-line">
+                    <strong>Usuario:</strong>
+                    <span id="usernameText">Cargando...</span>
+                </div>
+
+                <div class="info-line">
+                    <strong>Email asociado:</strong>
+                    <span id="emailText">Cargando...</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Banca asignada</h2>
+                <p class="info-line">
+                    Esta es la banca asignada actualmente por Clarity.
+                </p>
+
+                <div id="bankrollText" class="bankroll">
+                    Cargando...
+                </div>
+            </div>
+
+            <div class="card" style="grid-column:1 / -1;">
+                <h2>Progreso del curso de ingreso</h2>
+
+                <div id="progressNumber" class="progress-number">
+                    0/10
+                </div>
+
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+</main>
+
+<div id="loadingModal" class="loading-overlay">
+    <div class="loading-card">
+        <div class="spinner"></div>
+        <p>Cargando dashboard...</p>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const DASHBOARD_SUPABASE_URL = "https://sxangxdumgoarftpidex.supabase.co";
+
+const DASHBOARD_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN4YW5neGR1bWdvYXJmdHBpZGV4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyMTAyNjQsImV4cCI6MjA5NTc4NjI2NH0.YIrylgNL3n8vzROjxLLyFTT_k1-TowcLQ0ALjNZzLYc";
+
+const dashboardSupabase = supabase.createClient(
+    DASHBOARD_SUPABASE_URL,
+    DASHBOARD_SUPABASE_ANON_KEY
+);
+
+const welcomeTitle = document.getElementById("welcomeTitle");
+const usernameText = document.getElementById("usernameText");
+const emailText = document.getElementById("emailText");
+const bankrollText = document.getElementById("bankrollText");
+const progressNumber = document.getElementById("progressNumber");
+const progressFill = document.getElementById("progressFill");
+const loadingModal = document.getElementById("loadingModal");
+
+async function loadDashboard(){
+
+    const { data: sessionData, error: sessionError } =
+        await dashboardSupabase.auth.getSession();
+
+    if(sessionError || !sessionData.session){
+        window.location.href = "login.html";
+        return;
+    }
+
+    const user = sessionData.session.user;
+
+    const email = user.email.toLowerCase();
+
+    const username =
+        user.user_metadata?.name ||
+        email.split("@")[0];
+
+    welcomeTitle.textContent = `Bienvenido a tu panel, ${username}`;
+    usernameText.textContent = username;
+    emailText.textContent = email;
+
+    await loadBankroll(email);
+    await loadProgress(email);
+
+    loadingModal.style.display = "none";
+}
+
+async function loadBankroll(email){
+
+    const { data, error } = await dashboardSupabase
+        .from("user_bankrolls")
+        .select("bankroll")
+        .eq("user_email", email)
+        .maybeSingle();
+
+    if(error){
+        console.error(error);
+        bankrollText.textContent = "Error cargando banca";
+        return;
+    }
+
+    bankrollText.textContent =
+        data?.bankroll || "No asignada";
+}
+
+async function loadProgress(email){
+
+    const { data, error } = await dashboardSupabase
+        .from("module_progress")
+        .select("module_id, completed")
+        .eq("user_email", email);
+
+    if(error){
+        console.error(error);
+        progressNumber.textContent = "Error";
+        return;
+    }
+
+    const completedModules = {};
+
+    if(data){
+        data.forEach(row => {
+            completedModules[row.module_id] = row.completed;
+        });
+    }
+
+    let completedCount = 0;
+
+
+    for(let i = 1; i <= 10; i++){
+
+        const moduleId = `modulo_${i}`;
+        const completed = completedModules[moduleId] === true;
+
+        if(completed){
+            completedCount++;
+        }
+    }
+
+    const percent = (completedCount / 10) * 100;
+
+    progressNumber.textContent = `${completedCount}/10`;
+    progressFill.style.width = `${percent}%`;
+}
+
+loadDashboard();
+</script>
+
+</body>
+</html>
