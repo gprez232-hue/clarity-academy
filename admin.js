@@ -24,6 +24,13 @@ const reasonModal = document.getElementById("reasonModal");
 const reasonText = document.getElementById("reasonText");
 const closeReasonModal = document.getElementById("closeReasonModal");
 
+document.querySelectorAll(".collapsible-card .admin-topbar").forEach(topbar => {
+    topbar.addEventListener("click", function(){
+        const card = this.closest(".collapsible-card");
+        card.classList.toggle("open");
+    });
+});
+
 async function loadAdminPanel(){
 
     const { data: sessionData } = await adminSupabase.auth.getSession();
@@ -445,7 +452,7 @@ function renderMonthlyUpdates(updates){
     monthlyUpdatesTable.innerHTML = "";
 
     if(!updates || updates.length === 0){
-        monthlyUpdatesCount.textContent = "0 actualizaciones";
+        monthlyUpdatesCount.textContent = "0 jugadores";
         monthlyUpdatesTable.innerHTML = `
             <tr>
                 <td colspan="6">Todavía no hay actualizaciones mensuales registradas.</td>
@@ -454,27 +461,77 @@ function renderMonthlyUpdates(updates){
         return;
     }
 
-    monthlyUpdatesCount.textContent =
-        updates.length === 1
-        ? "1 actualización"
-        : `${updates.length} actualizaciones`;
+    const grouped = {};
 
     updates.forEach(update => {
+        const email = update.user_email || "Sin email";
+
+        if(!grouped[email]){
+            grouped[email] = [];
+        }
+
+        grouped[email].push(update);
+    });
+
+    const emails = Object.keys(grouped);
+
+    monthlyUpdatesCount.textContent =
+        emails.length === 1
+        ? "1 jugador"
+        : `${emails.length} jugadores`;
+
+    emails.forEach(email => {
+
+        const months = grouped[email];
 
         const row = document.createElement("tr");
 
-        const updatedDate = update.updated_at
-            ? new Date(update.updated_at).toLocaleString("es-AR")
-            : "-";
+        const options = months.map((item, index) => {
+            return `
+                <option value="${index}">
+                    ${escapeHTML(item.month || "-")}
+                </option>
+            `;
+        }).join("");
 
         row.innerHTML = `
-            <td>${escapeHTML(update.user_email || "-")}</td>
-            <td>${escapeHTML(update.month || "-")}</td>
-            <td>${escapeHTML(update.tournaments ?? "-")}</td>
-            <td>${escapeHTML(update.all_in_adj ?? "-")}</td>
-            <td>${escapeHTML(update.bankroll ?? "-")}</td>
-            <td>${updatedDate}</td>
+            <td>${escapeHTML(email)}</td>
+
+            <td>
+                <select class="month-selector">
+                    ${options}
+                </select>
+            </td>
+
+            <td class="monthly-tournaments"></td>
+            <td class="monthly-allin"></td>
+            <td class="monthly-bankroll"></td>
+            <td class="monthly-updated"></td>
         `;
+
+        const selector = row.querySelector(".month-selector");
+        const tournamentsCell = row.querySelector(".monthly-tournaments");
+        const allinCell = row.querySelector(".monthly-allin");
+        const bankrollCell = row.querySelector(".monthly-bankroll");
+        const updatedCell = row.querySelector(".monthly-updated");
+
+        function updateVisibleMonth(index){
+            const selected = months[index];
+
+            tournamentsCell.textContent = selected?.tournaments ?? "-";
+            allinCell.textContent = selected?.all_in_adj ?? "-";
+            bankrollCell.textContent = selected?.bankroll ?? "-";
+
+            updatedCell.textContent = selected?.updated_at
+                ? new Date(selected.updated_at).toLocaleString("es-AR")
+                : "-";
+        }
+
+        selector.addEventListener("change", function(){
+            updateVisibleMonth(Number(this.value));
+        });
+
+        updateVisibleMonth(0);
 
         monthlyUpdatesTable.appendChild(row);
     });

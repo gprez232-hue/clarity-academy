@@ -374,6 +374,28 @@ tr:hover{
     color:white;
     font-size:26px;
 }
+
+.collapsible-card .admin-topbar{
+    cursor:pointer;
+}
+
+.collapsible-content{
+    display:none;
+}
+
+.collapsible-card.open .collapsible-content{
+    display:block;
+}
+
+.collapsible-card .admin-topbar h2::after{
+    content:"  ▼";
+    font-size:13px;
+    color:#5bc0ff;
+}
+
+.collapsible-card.open .admin-topbar h2::after{
+    content:"  ▲";
+}
 </style>
 </head>
 
@@ -385,26 +407,37 @@ tr:hover{
             CLARITY <span class="diamond">♦</span>
         </span>
     </a>
-    <a href="index.html" class="nav-link">Volver a la web</a>
+
+    <a href="index.html" class="nav-link">
+        Volver a la web
+    </a>
 </header>
 
 <main class="page">
 
     <section class="admin-header">
         <span class="admin-badge">Panel privado</span>
+
         <h1>Postulantes de Clarity</h1>
+
         <p>
             Aquí puedes ver los datos enviados por las personas que se registran en la academia.
         </p>
     </section>
 
-    <section class="admin-card">
+    <!-- REGISTROS -->
+
+    <section class="admin-card collapsible-card open">
+
         <div class="admin-topbar">
             <h2>Registros recibidos</h2>
-            <span class="admin-count" id="applicantCount">0 postulantes</span>
+            <span class="admin-count" id="applicantCount">
+                0 postulantes
+            </span>
         </div>
 
-        <div class="table-wrapper">
+        <div class="table-wrapper collapsible-content">
+
             <table>
                 <thead>
                     <tr>
@@ -421,69 +454,97 @@ tr:hover{
                 <tbody id="applicantsTable">
                 </tbody>
             </table>
+
         </div>
+
     </section>
 
     <div class="status-message" id="statusMessage">
         Cargando postulantes...
     </div>
-    <section class="admin-card" style="margin-top:30px;">
-    <div class="admin-topbar">
-        <h2>Progreso del curso</h2>
-        <span class="admin-count" id="progressCount">0 registros</span>
-    </div>
 
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>Email</th>
-                    <th>Módulo</th>
-                    <th>Completado</th>
-                    <th>Última actualización</th>
-                    <th>Notas</th>
-                </tr>
-            </thead>
+    <!-- PROGRESO CURSO -->
 
-            <tbody id="progressTable">
-            </tbody>
-        </table>
-    </div>
-</section>
+    <section class="admin-card collapsible-card" style="margin-top:30px;">
 
-
-    <section class="admin-card" style="margin-top:30px;">
-    <div class="admin-topbar">
-        <h2>Asignación de jugadores</h2>
-        <span class="admin-count" id="playerSettingsCount">0 jugadores</span>
-    </div>
-
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>Email</th>
-                    <th>Banca</th>
-                    <th>Nivel</th>
-                    <th>Sala</th>
-                    <th>Coach</th>
-                    <th>Última actualización</th>
-                    <th>Editar</th>
-                </tr>
-            </thead>
-
-            <tbody id="playerSettingsTable"></tbody>
-        </table>
-    </div>
-</section>
-
-    <section class="admin-card" style="margin-top:30px;">
         <div class="admin-topbar">
-            <h2>Actualizaciones mensuales de jugadores</h2>
-            <span class="admin-count" id="monthlyUpdatesCount">0 registros</span>
+            <h2>Progreso del curso</h2>
+
+            <span class="admin-count" id="progressCount">
+                0 registros
+            </span>
         </div>
 
-        <div class="table-wrapper">
+        <div class="table-wrapper collapsible-content">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Módulo</th>
+                        <th>Completado</th>
+                        <th>Última actualización</th>
+                        <th>Notas</th>
+                    </tr>
+                </thead>
+
+                <tbody id="progressTable">
+                </tbody>
+            </table>
+
+        </div>
+
+    </section>
+
+    <!-- ASIGNACIÓN -->
+
+    <section class="admin-card collapsible-card" style="margin-top:30px;">
+
+        <div class="admin-topbar">
+            <h2>Asignación de jugadores</h2>
+
+            <span class="admin-count" id="playerSettingsCount">
+                0 jugadores
+            </span>
+        </div>
+
+        <div class="table-wrapper collapsible-content">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Banca</th>
+                        <th>Nivel</th>
+                        <th>Sala</th>
+                        <th>Coach</th>
+                        <th>Última actualización</th>
+                        <th>Editar</th>
+                    </tr>
+                </thead>
+
+                <tbody id="playerSettingsTable">
+                </tbody>
+            </table>
+
+        </div>
+
+    </section>
+
+    <!-- ACTUALIZACIONES MENSUALES -->
+
+    <section class="admin-card collapsible-card" style="margin-top:30px;">
+
+        <div class="admin-topbar">
+            <h2>Actualizaciones mensuales de jugadores</h2>
+
+            <span class="admin-count" id="monthlyUpdatesCount">
+                0 registros
+            </span>
+        </div>
+
+        <div class="table-wrapper collapsible-content">
+
             <table>
                 <thead>
                     <tr>
@@ -499,7 +560,9 @@ tr:hover{
                 <tbody id="monthlyUpdatesTable">
                 </tbody>
             </table>
+
         </div>
+
     </section>
 
 </main>
@@ -507,14 +570,21 @@ tr:hover{
 <div id="reasonModal" class="modal-overlay">
     <div class="modal-card">
         <h2>Motivo de ingreso</h2>
+
         <p id="reasonText"></p>
-        <button class="modal-close" id="closeReasonModal">Cerrar</button>
+
+        <button
+            class="modal-close"
+            id="closeReasonModal">
+            Cerrar
+        </button>
     </div>
 </div>
 
 <div id="loadingModal" class="loading-overlay">
     <div class="loading-card">
         <div class="spinner"></div>
+
         <p>Verificando acceso...</p>
     </div>
 </div>
