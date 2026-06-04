@@ -246,6 +246,46 @@ body{
     }
 }
 
+.locked-panel{
+    text-align:center;
+    padding:50px 30px;
+}
+
+.locked-icon{
+    font-size:72px;
+    margin-bottom:18px;
+}
+
+.locked-title{
+    color:#082B63;
+    font-size:28px;
+    font-weight:900;
+    margin-bottom:14px;
+}
+
+.locked-text{
+    color:#4b5563;
+    font-size:15px;
+    line-height:1.7;
+    max-width:650px;
+    margin:0 auto 10px;
+}
+
+.locked-btn{
+    display:inline-block;
+    margin-top:20px;
+    padding:14px 24px;
+    background:#1565c0;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+    font-weight:900;
+}
+
+.locked-btn:hover{
+    background:#0f4f9e;
+}
+
 </style>
 </head>
 
@@ -324,12 +364,40 @@ body{
                     <div id="progressFill" class="progress-fill"></div>
                 </div>
             </div>
-            <div class="card" style="grid-column:1 / -1;">
-                <h2>Panel para jugadores Clarity</h2>
+            <div class="card" id="playerPanelCard" style="grid-column:1 / -1;">
 
-                <p class="info-line">
-                    Actualiza tus datos mensuales de PokerTracker. Selecciona el mes y guarda tus datos acumulados.
-                </p>
+    <div id="lockedPanel" style="display:none;" class="locked-panel">
+
+        <div class="locked-icon">🔒</div>
+
+        <div class="locked-title">
+            Panel para jugadores Clarity
+        </div>
+
+        <p class="locked-text">
+            Actualmente no tienes una banca asignada.
+        </p>
+
+        <p class="locked-text">
+            Este panel se habilitará automáticamente cuando seas aceptado
+            dentro del programa de bancaje de Clarity Academy.
+        </p>
+
+        <a href="aplicar_bancaje" class="locked-btn">
+            Aplicar para bancaje
+        </a>
+
+    </div>
+
+    <div id="activePlayerPanel">
+
+        <h2>Panel para jugadores Clarity</h2>
+
+        <p class="info-line">
+            Actualiza tus datos mensuales de PokerTracker.
+        </p>
+
+        <!-- TODO EL CONTENIDO QUE YA TIENES -->
 
                 <div class="player-panel-grid">
                     <div class="form-group">
@@ -371,6 +439,9 @@ body{
                 </button>
 
                 <div id="monthlyStatus" class="monthly-status"></div>
+                    </div>
+
+</div>
             </div>
         </section>
 
@@ -414,6 +485,8 @@ const allInAdjInput = document.getElementById("allInAdjInput");
 const monthlyBankrollInput = document.getElementById("monthlyBankrollInput");
 const saveMonthlyBtn = document.getElementById("saveMonthlyBtn");
 const monthlyStatus = document.getElementById("monthlyStatus");
+const lockedPanel = document.getElementById("lockedPanel");
+const activePlayerPanel = document.getElementById("activePlayerPanel");
 
 let currentDashboardEmail = "";
 
@@ -464,7 +537,22 @@ async function loadAssignedInfo(email){
         return;
     }
 
-    bankrollText.textContent = data?.bankroll || "No asignada";
+    const bankrollValue = Number(data?.bankroll || 0);
+
+bankrollText.textContent =
+    bankrollValue > 0
+        ? bankrollValue
+        : "No asignada";
+        if(bankrollValue > 0){
+
+    activePlayerPanel.style.display = "block";
+    lockedPanel.style.display = "none";
+
+}else{
+
+    activePlayerPanel.style.display = "none";
+    lockedPanel.style.display = "block";
+}
     levelText.textContent = data?.assigned_level || "No asignado";
     roomText.textContent = data?.assigned_room || "No asignada";
     coachText.textContent = data?.assigned_coach || "No asignado";
