@@ -11,21 +11,26 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 
+html, body{
+    width:100%;
+    min-height:100%;
+}
+
 body{
     font-family:Arial, Helvetica, sans-serif;
     background:#eef8ff;
     color:#1f2937;
+    overflow:auto;
 }
 
 .page{
     min-height:100vh;
-    padding:0;
     background:#eef8ff;
 }
 
 .preflop-app{
     display:grid;
-    grid-template-columns:320px 1fr;
+    grid-template-columns:220px minmax(0, 1fr);
     min-height:100vh;
 }
 
@@ -34,6 +39,7 @@ body{
     padding:6px;
     color:white;
     overflow-y:auto;
+    height:100vh;
     display:flex;
     flex-direction:column;
 }
@@ -41,10 +47,10 @@ body{
 .app-logo{
     text-align:center;
     color:white;
-    font-size:20px;
+    font-size:17px;
     font-weight:900;
-    margin-bottom:10px;
-    padding-top:8px;
+    margin-bottom:6px;
+    padding-top:6px;
     letter-spacing:1px;
 }
 
@@ -53,26 +59,27 @@ body{
     text-align:center;
     color:#5bc0ff;
     text-decoration:none;
-    font-size:12px;
+    font-size:11px;
     font-weight:800;
-    margin-bottom:10px;
+    margin-bottom:8px;
 }
 
 .mode-container{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:6px;
-    margin-bottom:10px;
+    gap:5px;
+    margin-bottom:8px;
 }
 
 .mode-btn{
-    padding:11px;
+    padding:9px 6px;
     border:none;
     border-radius:6px;
     cursor:pointer;
     background:#123b78;
     color:white;
     font-weight:900;
+    font-size:11px;
 }
 
 .mode-btn.active{
@@ -83,21 +90,15 @@ body{
 .columns{
     display:grid;
     grid-template-columns:repeat(4, 1fr);
-    gap:8px;
+    gap:4px;
     align-items:start;
-}
-
-.column{
-    background:transparent;
-    border:none;
-    padding:0;
 }
 
 .col-title{
     text-align:center;
-    margin-bottom:8px;
+    margin-bottom:6px;
     font-weight:900;
-    font-size:16px;
+    font-size:12px;
 }
 
 .btn{color:#ff4040}
@@ -106,18 +107,18 @@ body{
 
 .spot-btn{
     width:100%;
-    min-height:36px;
-    padding:6px 5px;
-    margin-bottom:7px;
+    min-height:27px;
+    padding:4px 2px;
+    margin-bottom:4px;
     border:none;
     border-radius:6px;
     cursor:pointer;
     background:#123b78;
     color:#eaf6ff;
-    font-size:12px;
+    font-size:7.8px;
     font-weight:900;
     text-align:center;
-    line-height:1.15;
+    line-height:1.08;
 }
 
 .spot-btn:hover{
@@ -126,53 +127,46 @@ body{
 }
 
 .legend{
-    margin-top:18px;
+    margin-top:12px;
     display:flex;
     flex-direction:column;
-    gap:7px;
-}
-
-.preflop-sidebar.hu-mode .legend{
-    margin-top:6px;
-}
-
-.preflop-sidebar.hu-mode .columns{
-    margin-bottom:2px;
+    gap:6px;
 }
 
 .legend-item{
-    padding:8px;
+    padding:6px 4px;
     border-radius:6px;
-    font-size:12px;
+    font-size:9.3px;
     text-align:center;
     font-weight:900;
     color:black;
+    line-height:1.15;
 }
 
 .extra-tables{
     margin-top:auto;
-    padding-top:20px;
+    padding-top:12px;
 }
 
 .extra-title{
     text-align:center;
     color:white;
-    font-size:13px;
+    font-size:11px;
     font-weight:900;
-    margin-bottom:10px;
+    margin-bottom:7px;
     letter-spacing:1px;
 }
 
 .extra-btn{
     width:100%;
-    padding:12px;
-    margin-bottom:8px;
+    padding:9px;
+    margin-bottom:7px;
     border:none;
     border-radius:8px;
     cursor:pointer;
     background:#1565c0;
     color:white;
-    font-size:13px;
+    font-size:11px;
     font-weight:900;
 }
 
@@ -183,29 +177,30 @@ body{
 
 .preflop-main{
     background:#f4f9ff;
-    padding:18px;
+    padding:12px;
     overflow:auto;
+    min-width:0;
 }
 
 #title{
     color:#082B63;
-    font-size:22px;
-    margin-bottom:10px;
+    font-size:21px;
+    margin-bottom:9px;
 }
 
 #stacks{
-    margin-bottom:12px;
+    margin-bottom:9px;
 }
 
 .stack-btn{
-    padding:9px 13px;
+    padding:8px 11px;
     margin:4px;
     border-radius:8px;
     border:none;
     cursor:pointer;
     background:#1565c0;
     color:white;
-    font-size:13px;
+    font-size:12px;
     font-weight:900;
 }
 
@@ -214,40 +209,33 @@ body{
 }
 
 .table{
-    margin-top:12px;
+    margin-top:10px;
     background:#dceeff;
-    padding:18px;
+    padding:12px;
     border-radius:10px;
     text-align:center;
-    overflow-x:auto;
+    overflow:auto;
+    max-width:100%;
 }
 
 .table h3{
     color:#082B63;
-    font-size:18px;
-    margin-bottom:10px;
+    font-size:17px;
+    margin-bottom:9px;
 }
 
 .table img{
-    width:820px;
-    max-width:100%;
+    width:min(720px, 100%);
+    height:auto;
     border-radius:8px;
     background:white;
 }
 
-.big-defense{
-    width:700px !important;
-    max-width:none !important;
-}
-
-.big-cbet-flop{
-    width:700px !important;
-    max-width:none !important;
-}
-
+.big-defense,
+.big-cbet-flop,
 .big-cbet-tyr{
-    width:700px !important;
-    max-width:none !important;
+    width:min(680px, 100%) !important;
+    height:auto;
 }
 
 .empty-state{
@@ -298,13 +286,149 @@ body{
     to{transform:rotate(360deg)}
 }
 
-@media(max-width:1000px){
+/* Monitores medianos / notebooks 1366x768 */
+@media(max-width:1366px){
     .preflop-app{
-        grid-template-columns:1fr;
+        grid-template-columns:210px minmax(0, 1fr);
+    }
+
+    .preflop-sidebar{
+        padding:5px;
+    }
+
+    .app-logo{
+        font-size:16px;
+    }
+
+    .back-link{
+        font-size:10.5px;
+    }
+
+    .columns{
+        gap:3px;
+    }
+
+    .col-title{
+        font-size:11px;
+    }
+
+    .spot-btn{
+        min-height:25px;
+        font-size:7px;
+        padding:3px 2px;
+        margin-bottom:4px;
+    }
+
+    .legend-item{
+        font-size:8.8px;
+        padding:5px 3px;
+    }
+
+    .extra-title{
+        font-size:10.5px;
+    }
+
+    .extra-btn{
+        padding:8px;
+        font-size:10.5px;
+    }
+
+    .preflop-main{
+        padding:10px;
+    }
+
+    #title{
+        font-size:20px;
+    }
+
+    .table{
+        padding:10px;
+    }
+
+    .table img{
+        width:min(680px, 100%);
+    }
+
+    .big-defense,
+    .big-cbet-flop,
+    .big-cbet-tyr{
+        width:min(640px, 100%) !important;
+    }
+}
+
+/* Monitores aún más chicos */
+@media(max-width:1150px){
+    .preflop-app{
+        grid-template-columns:195px minmax(0, 1fr);
+    }
+
+    .app-logo{
+        font-size:15px;
+    }
+
+    .spot-btn{
+        min-height:24px;
+        font-size:6.6px;
+    }
+
+    .legend-item{
+        font-size:8.4px;
+    }
+
+    .table img{
+        width:min(640px, 100%);
+    }
+
+    .big-defense,
+    .big-cbet-flop,
+    .big-cbet-tyr{
+        width:min(600px, 100%) !important;
+    }
+}
+
+/* Tablets / móvil: recién acá pasa a vertical */
+@media(max-width:850px){
+    .preflop-app{
+        display:block;
+    }
+
+    .preflop-sidebar{
+        height:auto;
+        max-height:none;
+        overflow:visible;
     }
 
     .columns{
         grid-template-columns:repeat(2, 1fr);
+        gap:6px;
+    }
+
+    .spot-btn{
+        font-size:11px;
+        min-height:34px;
+        padding:6px 4px;
+    }
+
+    .legend{
+        display:grid;
+        grid-template-columns:1fr;
+    }
+
+    .legend-item{
+        font-size:11px;
+    }
+
+    .preflop-main{
+        padding:12px;
+    }
+
+    .table{
+        padding:10px;
+    }
+
+    .table img{
+        width:720px;
+        max-width:none;
     }
 }
 
@@ -353,15 +477,16 @@ body{
             <a href="index.html" class="back-link">← Volver a la academia</a>
             <div class="resolution-switch">
 
-  <a href="tablas_preflop.html"
-   class="resolution-btn active">
+    <a href="tablas_preflop.html"
+   class="resolution-btn">
    Monitor 1080p+
 </a>
 
 <a href="tablas_preflop_lowres.html"
-   class="resolution-btn">
+   class="resolution-btn active">
    Monitor baja resolución
 </a>
+
 </div>
 
             <div class="mode-container">
