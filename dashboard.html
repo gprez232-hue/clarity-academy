@@ -286,6 +286,39 @@ body{
     background:#0f4f9e;
 }
 
+.advanced-panel{
+    text-align:center;
+    max-width:650px;
+    margin:0 auto;
+}
+
+.advanced-icon{
+    font-size:54px;
+    margin-bottom:16px;
+}
+
+.advanced-text{
+    color:#4b5563;
+    font-size:15px;
+    line-height:1.7;
+    max-width:650px;
+    margin:0 auto 20px;
+}
+
+.advanced-btn{
+    display:inline-block;
+    padding:14px 26px;
+    background:#1565c0;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+    font-weight:900;
+}
+
+.advanced-btn:hover{
+    background:#0f4f9e;
+}
+
 </style>
 </head>
 
@@ -311,139 +344,169 @@ body{
 
         <section class="dashboard-grid">
 
-            <div class="card">
-                <h2>Datos de la cuenta</h2>
+    <div class="card">
+        <h2>Datos de la cuenta</h2>
 
-                <div class="info-line">
-                    <strong>Usuario:</strong>
-                    <span id="usernameText">Cargando...</span>
-                </div>
-
-                <div class="info-line">
-                    <strong>Email asociado:</strong>
-                    <span id="emailText">Cargando...</span>
-                </div>
-            </div>
-
-            <div class="card">
-                <h2>Información asignada</h2>
-
-                <p class="info-line">
-                    Estos datos son configurados por Clarity desde el panel administrativo.
-                </p>
-
-                <div class="info-line">
-                    <strong>Banca asignada:</strong>
-                    <span id="bankrollText" class="assigned-value">Cargando...</span>
-                </div>
-
-                <div class="info-line">
-                    <strong>Nivel asignado:</strong>
-                    <span id="levelText" class="assigned-value">Cargando...</span>
-                </div>
-
-                <div class="info-line">
-                    <strong>Sala asignada:</strong>
-                    <span id="roomText" class="assigned-value">Cargando...</span>
-                </div>
-
-                <div class="info-line">
-                    <strong>Coach asignado:</strong>
-                    <span id="coachText" class="assigned-value">Cargando...</span>
-                </div>
-            </div>
-
-            <div class="card" style="grid-column:1 / -1;">
-                <h2>Progreso del curso de ingreso</h2>
-
-                <div id="progressNumber" class="progress-number">
-                    0/10
-                </div>
-
-                <div class="progress-bar">
-                    <div id="progressFill" class="progress-fill"></div>
-                </div>
-            </div>
-            <div class="card" id="playerPanelCard" style="grid-column:1 / -1;">
-
-    <div id="lockedPanel" style="display:none;" class="locked-panel">
-
-        <div class="locked-icon">🔒</div>
-
-        <div class="locked-title">
-            Panel para jugadores Clarity
+        <div class="info-line">
+            <strong>Usuario:</strong>
+            <span id="usernameText">Cargando...</span>
         </div>
 
-        <p class="locked-text">
-            Actualmente no tienes una banca asignada.
+        <div class="info-line">
+            <strong>Email asociado:</strong>
+            <span id="emailText">Cargando...</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Información asignada</h2>
+
+        <p class="info-line">
+            Estos datos son configurados por Clarity desde el panel administrativo.
         </p>
 
-        <p class="locked-text">
-            Este panel se habilitará automáticamente cuando seas aceptado
-            dentro del programa de bancaje de Clarity Academy.
-        </p>
+        <div class="info-line">
+            <strong>Banca asignada:</strong>
+            <span id="bankrollText" class="assigned-value">Cargando...</span>
+        </div>
 
-        <a href="aplicar_bancaje" class="locked-btn">
-            Aplicar para bancaje
-        </a>
+        <div class="info-line">
+            <strong>Nivel asignado:</strong>
+            <span id="levelText" class="assigned-value">Cargando...</span>
+        </div>
+
+        <div class="info-line">
+            <strong>Sala asignada:</strong>
+            <span id="roomText" class="assigned-value">Cargando...</span>
+        </div>
+
+        <div class="info-line">
+            <strong>Coach asignado:</strong>
+            <span id="coachText" class="assigned-value">Cargando...</span>
+        </div>
+    </div>
+
+    <div class="card" style="grid-column:1 / -1;">
+        <h2>Progreso del curso de ingreso</h2>
+
+        <div id="progressNumber" class="progress-number">
+            0/10
+        </div>
+
+        <div class="progress-bar">
+            <div id="progressFill" class="progress-fill"></div>
+        </div>
+    </div>
+
+    <div class="card" id="playerPanelCard" style="grid-column:1 / -1;">
+
+        <div id="lockedPanel" style="display:none;" class="locked-panel">
+            <div class="locked-icon">🔒</div>
+
+            <div class="locked-title">
+                Panel para jugadores Clarity
+            </div>
+
+            <p class="locked-text">
+                Actualmente no tienes una banca asignada.
+            </p>
+
+            <p class="locked-text">
+                Este panel se habilitará automáticamente cuando seas aceptado
+                dentro del programa de bancaje de Clarity Academy.
+            </p>
+
+            <a href="aplicar_bancaje" class="locked-btn">
+                Aplicar para bancaje
+            </a>
+        </div>
+
+        <div id="activePlayerPanel">
+            <h2>Panel para jugadores Clarity</h2>
+
+            <p class="info-line">
+                Actualiza tus datos mensuales de PokerTracker.
+            </p>
+
+            <div class="player-panel-grid">
+                <div class="form-group">
+                    <label>Mes</label>
+                    <select id="monthSelect">
+                        <option value="enero">Enero</option>
+                        <option value="febrero">Febrero</option>
+                        <option value="marzo">Marzo</option>
+                        <option value="abril">Abril</option>
+                        <option value="mayo">Mayo</option>
+                        <option value="junio">Junio</option>
+                        <option value="julio">Julio</option>
+                        <option value="agosto">Agosto</option>
+                        <option value="septiembre">Septiembre</option>
+                        <option value="octubre">Octubre</option>
+                        <option value="noviembre">Noviembre</option>
+                        <option value="diciembre">Diciembre</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Torneos</label>
+                    <input id="tournamentsInput" type="number" min="0" placeholder="Ej: 4200">
+                </div>
+
+                <div class="form-group">
+                    <label>All-In Adj</label>
+                    <input id="allInAdjInput" type="number" step="0.01" placeholder="Ej: 750">
+                </div>
+
+                <div class="form-group">
+                    <label>Banca</label>
+                    <input id="monthlyBankrollInput" type="number" step="0.01" placeholder="Ej: 1500">
+                </div>
+            </div>
+
+            <button id="saveMonthlyBtn" class="save-month-btn">
+                Guardar datos del mes
+            </button>
+
+            <div id="monthlyStatus" class="monthly-status"></div>
+        </div>
 
     </div>
 
-    <div id="activePlayerPanel">
+    <div class="card" id="advancedClassesCard" style="grid-column:1 / -1;">
 
-        <h2>Panel para jugadores Clarity</h2>
+        <div id="lockedAdvancedPanel" style="display:none;" class="locked-panel">
+            <div class="locked-icon">🔒</div>
 
-        <p class="info-line">
-            Actualiza tus datos mensuales de PokerTracker.
-        </p>
-
-        <!-- TODO EL CONTENIDO QUE YA TIENES -->
-
-                <div class="player-panel-grid">
-                    <div class="form-group">
-                        <label>Mes</label>
-                        <select id="monthSelect">
-                            <option value="enero">Enero</option>
-                            <option value="febrero">Febrero</option>
-                            <option value="marzo">Marzo</option>
-                            <option value="abril">Abril</option>
-                            <option value="mayo">Mayo</option>
-                            <option value="junio">Junio</option>
-                            <option value="julio">Julio</option>
-                            <option value="agosto">Agosto</option>
-                            <option value="septiembre">Septiembre</option>
-                            <option value="octubre">Octubre</option>
-                            <option value="noviembre">Noviembre</option>
-                            <option value="diciembre">Diciembre</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Torneos</label>
-                        <input id="tournamentsInput" type="number" min="0" placeholder="Ej: 4200">
-                    </div>
-
-                    <div class="form-group">
-                        <label>All-In Adj</label>
-                        <input id="allInAdjInput" type="number" step="0.01" placeholder="Ej: 750">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Banca</label>
-                        <input id="monthlyBankrollInput" type="number" step="0.01" placeholder="Ej: 1500">
-                    </div>
-                </div>
-
-                <button id="saveMonthlyBtn" class="save-month-btn">
-                    Guardar datos del mes
-                </button>
-
-                <div id="monthlyStatus" class="monthly-status"></div>
-                    </div>
-
-</div>
+            <div class="locked-title">
+                Clases avanzadas
             </div>
-        </section>
+
+            <p class="locked-text">
+                Este contenido está disponible únicamente para jugadores aceptados dentro de Clarity Academy.
+            </p>
+
+            <p class="locked-text">
+                Cuando tengas una banca asignada, este panel se desbloqueará automáticamente.
+            </p>
+        </div>
+
+        <div id="activeAdvancedPanel" style="display:none;" class="advanced-panel">
+            <div class="advanced-icon">🎓</div>
+
+            <h2>Clases avanzadas</h2>
+
+            <p class="advanced-text">
+                Accede al contenido avanzado de Clarity: clases, módulos, estrategias y material exclusivo para jugadores de la academia.
+            </p>
+
+            <a href="clases_avanzadas.html" class="advanced-btn">
+                Entrar a clases avanzadas
+            </a>
+        </div>
+
+    </div>
+
+</section>
 
     </div>
 </main>
@@ -487,6 +550,8 @@ const saveMonthlyBtn = document.getElementById("saveMonthlyBtn");
 const monthlyStatus = document.getElementById("monthlyStatus");
 const lockedPanel = document.getElementById("lockedPanel");
 const activePlayerPanel = document.getElementById("activePlayerPanel");
+const lockedAdvancedPanel = document.getElementById("lockedAdvancedPanel");
+const activeAdvancedPanel = document.getElementById("activeAdvancedPanel");
 
 let currentDashboardEmail = "";
 
@@ -548,10 +613,16 @@ bankrollText.textContent =
     activePlayerPanel.style.display = "block";
     lockedPanel.style.display = "none";
 
+    activeAdvancedPanel.style.display = "block";
+    lockedAdvancedPanel.style.display = "none";
+
 }else{
 
     activePlayerPanel.style.display = "none";
     lockedPanel.style.display = "block";
+
+    activeAdvancedPanel.style.display = "none";
+    lockedAdvancedPanel.style.display = "block";
 }
     levelText.textContent = data?.assigned_level || "No asignado";
     roomText.textContent = data?.assigned_room || "No asignada";
