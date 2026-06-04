@@ -14,6 +14,12 @@ const applicantCount = document.getElementById("applicantCount");
 const progressTable = document.getElementById("progressTable");
 const progressCount = document.getElementById("progressCount");
 
+const playerSettingsTable = document.getElementById("playerSettingsTable");
+const playerSettingsCount = document.getElementById("playerSettingsCount");
+
+const monthlyUpdatesTable = document.getElementById("monthlyUpdatesTable");
+const monthlyUpdatesCount = document.getElementById("monthlyUpdatesCount");
+
 const reasonModal = document.getElementById("reasonModal");
 const reasonText = document.getElementById("reasonText");
 const closeReasonModal = document.getElementById("closeReasonModal");
@@ -53,8 +59,12 @@ async function loadAdminPanel(){
     }
 
     renderApplicants(applicants);
-await loadCourseProgress();
-hideLoading();
+
+    await loadCourseProgress();
+    await loadPlayerSettings();
+    await loadMonthlyUpdates();
+
+    hideLoading();
 }
 
 function renderApplicants(applicants){
@@ -104,26 +114,6 @@ function renderApplicants(applicants){
     });
 }
 
-function openReasonModal(reason){
-    reasonText.textContent = reason;
-    reasonModal.style.display = "flex";
-}
-
-function closeModal(){
-    reasonModal.style.display = "none";
-}
-
-if(closeReasonModal){
-    closeReasonModal.addEventListener("click", closeModal);
-}
-
-if(reasonModal){
-    reasonModal.addEventListener("click", function(e){
-        if(e.target === reasonModal){
-            closeModal();
-        }
-    });
-}
 async function loadCourseProgress(){
 
     const { data: progress, error } = await adminSupabase
@@ -181,7 +171,6 @@ function renderCourseProgress(progress){
     emails.forEach(email => {
 
         const modules = grouped[email];
-
         const completedCount = modules.filter(m => m.completed).length;
 
         const headerRow = document.createElement("tr");
@@ -215,8 +204,8 @@ function renderCourseProgress(progress){
 
         modules
             .sort((a, b) => {
-                const numA = parseInt(a.module_id.replace("modulo_", ""));
-                const numB = parseInt(b.module_id.replace("modulo_", ""));
+                const numA = parseInt(String(a.module_id).replace("modulo_", ""));
+                const numB = parseInt(String(b.module_id).replace("modulo_", ""));
                 return numA - numB;
             })
             .forEach(row => {
@@ -258,6 +247,257 @@ function renderCourseProgress(progress){
 
             this.textContent = isHidden ? "Ocultar progreso" : "Ver progreso";
         });
+    });
+}
+
+async function loadPlayerSettings(){
+
+    if(!playerSettingsTable){
+        return;
+    }
+
+    const { data, error } = await adminSupabase
+        .from("user_bankrolls")
+        .select("*")
+        .order("user_email", { ascending:true });
+
+    if(error){
+        console.error(error);
+        playerSettingsTable.innerHTML = `
+            <tr>
+                <td colspan="6">Error cargando configuración de jugadores.</td>
+            </tr>
+        `;
+        return;
+    }
+
+    renderPlayerSettings(data || []);
+}
+
+function renderPlayerSettings(players){
+
+    playerSettingsTable.innerHTML = "";
+
+    if(!players || players.length === 0){
+        playerSettingsCount.textContent = "0 jugadores";
+        playerSettingsTable.innerHTML = `
+            <tr>
+                <td colspan="6">
+                    Todavía no hay jugadores configurados. Puedes crear uno escribiendo un email y guardando.
+                </td>
+            </tr>
+        `;
+    }else{
+        playerSettingsCount.textContent =
+            players.length === 1
+            ? "1 jugador"
+            : `${players.length} jugadores`;
+
+        players.forEach(player => {
+            addPlayerSettingsRow(player);
+        });
+    }
+
+    addEmptyPlayerSettingsRow();
+}
+
+function addPlayerSettingsRow(player = {}){
+
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+        <td>
+            <input class="admin-input player-email" value="${escapeHTML(player.user_email || "")}" placeholder="email@ejemplo.com">
+        </td>
+
+        <td>
+            <input class="admin-input player-bankroll" value="${escapeHTML(player.bankroll || "")}" placeholder="Ej: 100">
+        </td>
+
+        <td>
+            <input class="admin-input player-level" value="${escapeHTML(player.assigned_level || "")}" placeholder="Ej: 1s / 2s / 5s">
+        </td>
+
+        <td>
+            <input class="admin-input player-room" value="${escapeHTML(player.assigned_room || "")}" placeholder="Ej: Champion Poker">
+        </td>
+
+        <td>
+            <input class="admin-input player-coach" value="${escapeHTML(player.assigned_coach || "")}" placeholder="Ej: Gonzalo">
+        </td>
+
+        <td>
+            <button class="reason-button save-player-settings">
+                Guardar
+            </button>
+        </td>
+    `;
+
+    row.querySelector(".save-player-settings").addEventListener("click", async function(){
+        await savePlayerSettingsRow(row);
+    });
+
+    playerSettingsTable.appendChild(row);
+}
+
+function addEmptyPlayerSettingsRow(){
+
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+        <td>
+            <input class="admin-input player-email" placeholder="nuevo@email.com">
+        </td>
+
+        <td>
+            <input class="admin-input player-bankroll" placeholder="Ej: 100">
+        </td>
+
+        <td>
+            <input class="admin-input player-level" placeholder="Ej: 1s">
+        </td>
+
+        <td>
+            <input class="admin-input player-room" placeholder="Ej: Champion Poker">
+        </td>
+
+        <td>
+            <input class="admin-input player-coach" placeholder="Ej: Gonzalo">
+        </td>
+
+        <td>
+            <button class="reason-button save-player-settings">
+                Crear / Guardar
+            </button>
+        </td>
+    `;
+
+    row.querySelector(".save-player-settings").addEventListener("click", async function(){
+        await savePlayerSettingsRow(row);
+    });
+
+    playerSettingsTable.appendChild(row);
+}
+
+async function savePlayerSettingsRow(row){
+
+    const email = row.querySelector(".player-email").value.trim().toLowerCase();
+    const bankroll = row.querySelector(".player-bankroll").value.trim();
+    const level = row.querySelector(".player-level").value.trim();
+    const room = row.querySelector(".player-room").value.trim();
+    const coach = row.querySelector(".player-coach").value.trim();
+
+    if(!email){
+        openReasonModal("Debes escribir un email para guardar la configuración del jugador.");
+        return;
+    }
+
+    const { error } = await adminSupabase
+        .from("user_bankrolls")
+        .upsert({
+            user_email: email,
+            bankroll: bankroll,
+            assigned_level: level,
+            assigned_room: room,
+            assigned_coach: coach,
+            updated_at: new Date().toISOString()
+        }, {
+            onConflict: "user_email"
+        });
+
+    if(error){
+        console.error(error);
+        openReasonModal("Error guardando configuración del jugador.");
+        return;
+    }
+
+    openReasonModal("Configuración del jugador guardada correctamente ✅");
+    await loadPlayerSettings();
+}
+
+async function loadMonthlyUpdates(){
+
+    if(!monthlyUpdatesTable){
+        return;
+    }
+
+    const { data, error } = await adminSupabase
+        .from("player_monthly_updates")
+        .select("*")
+        .order("user_email", { ascending:true })
+        .order("month", { ascending:true });
+
+    if(error){
+        console.error(error);
+        monthlyUpdatesTable.innerHTML = `
+            <tr>
+                <td colspan="6">Error cargando actualizaciones mensuales.</td>
+            </tr>
+        `;
+        return;
+    }
+
+    renderMonthlyUpdates(data || []);
+}
+
+function renderMonthlyUpdates(updates){
+
+    monthlyUpdatesTable.innerHTML = "";
+
+    if(!updates || updates.length === 0){
+        monthlyUpdatesCount.textContent = "0 actualizaciones";
+        monthlyUpdatesTable.innerHTML = `
+            <tr>
+                <td colspan="6">Todavía no hay actualizaciones mensuales registradas.</td>
+            </tr>
+        `;
+        return;
+    }
+
+    monthlyUpdatesCount.textContent =
+        updates.length === 1
+        ? "1 actualización"
+        : `${updates.length} actualizaciones`;
+
+    updates.forEach(update => {
+
+        const row = document.createElement("tr");
+
+        const updatedDate = update.updated_at
+            ? new Date(update.updated_at).toLocaleString("es-AR")
+            : "-";
+
+        row.innerHTML = `
+            <td>${escapeHTML(update.user_email || "-")}</td>
+            <td>${escapeHTML(update.month || "-")}</td>
+            <td>${escapeHTML(update.tournaments ?? "-")}</td>
+            <td>${escapeHTML(update.all_in_adj ?? "-")}</td>
+            <td>${escapeHTML(update.bankroll ?? "-")}</td>
+            <td>${updatedDate}</td>
+        `;
+
+        monthlyUpdatesTable.appendChild(row);
+    });
+}
+
+function openReasonModal(reason){
+    reasonText.textContent = reason;
+    reasonModal.style.display = "flex";
+}
+
+function closeModal(){
+    reasonModal.style.display = "none";
+}
+
+if(closeReasonModal){
+    closeReasonModal.addEventListener("click", closeModal);
+}
+
+if(reasonModal){
+    reasonModal.addEventListener("click", function(e){
+        if(e.target === reasonModal){
+            closeModal();
+        }
     });
 }
 
