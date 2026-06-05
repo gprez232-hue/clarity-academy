@@ -579,10 +579,17 @@ async function loadDashboard(){
     emailText.textContent = email;
 
     await loadAssignedInfo(email);
-    await loadProgress(email);
-    await loadMonthlyData(email, monthSelect.value);
+await loadProgress(email);
 
-    loadingModal.style.display = "none";
+const savedMonth = localStorage.getItem("claritySelectedMonth");
+
+if(savedMonth){
+    monthSelect.value = savedMonth;
+}
+
+await loadMonthlyData(email, monthSelect.value);
+
+loadingModal.style.display = "none";
 }
 
 async function loadAssignedInfo(email){
@@ -719,7 +726,16 @@ async function saveMonthlyData(){
     monthlyStatus.textContent = "Datos del mes guardados correctamente ✅";
 }
 monthSelect.addEventListener("change", async function(){
-    await loadMonthlyData(currentDashboardEmail, monthSelect.value);
+
+    localStorage.setItem(
+        "claritySelectedMonth",
+        monthSelect.value
+    );
+
+    await loadMonthlyData(
+        currentDashboardEmail,
+        monthSelect.value
+    );
 });
 
 saveMonthlyBtn.addEventListener("click", saveMonthlyData);
